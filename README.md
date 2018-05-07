@@ -4,8 +4,8 @@ An app that helps you time block a task and contact someone if you still have no
 
 ### Tech
 
-**_ Client _**:<br>
-**_ Server _**: Node.js v8.9.4<br>
+**Client**:Vue.js<br>
+**Server**: Node.js v8.9.4<br>
 
 ### App Flow
 
