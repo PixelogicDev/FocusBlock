@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
+import TimeBlock from '../TimeBlock/index';
 
 class Dashboard extends Component {
-  render() {
-    return <h1> Hello From The Dashboard </h1>;
-  }
+	render() {
+		/* 
+			Setup some UI to generate block components
+			Each block component will need:
+				Id
+				Title
+				Timer
+		*/
+
+		return <TimeBlock blockTitle="SomeNewTitle" />;
+	}
 }
 
 export default Dashboard;
