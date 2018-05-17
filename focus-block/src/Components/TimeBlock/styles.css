@@ -1,9 +1,6 @@
 .block {
-	width: 400px;
-	height: 400px;
-}
-
-.block .block-title,
-.block-time {
-	text-align: center;
-}
+  width: 400px;
+  height: 400px; }
+  .block .block-title,
+  .block .block-time {
+    text-align: center; }
