@@ -15,7 +15,8 @@ class BlockForm extends Component {
 
 	state = {
 		title: '',
-		timer: ''
+		timer: '15',
+		contact: ''
 	};
 
 	handleChange = event => {
@@ -34,25 +35,30 @@ class BlockForm extends Component {
 	render() {
 		return (
 			<form onSubmit={this.createBlock}>
-				<label>
-					Focus Title:
-					<input
-						name="title"
-						type="text"
-						value={this.state.title}
-						onChange={this.handleChange}
-					/>
-				</label>
-				<label>
-					Focus Time:
-					<input
-						name="timer"
-						type="text"
-						value={this.state.timer}
-						onChange={this.handleChange}
-					/>
-				</label>
-				<input type="submit" value="Submit" />
+				<label>What are you focusing on?</label>
+				<input
+					name="title"
+					placeholder="Title"
+					type="text"
+					value={this.state.title}
+					onChange={this.handleChange}
+				/>
+				<label>How long do you need to focus?</label>
+				<select name="timer" onChange={this.handleChange}>
+					<option value="15">15m</option>
+					<option value="30">30m</option>
+					<option value="45">45m</option>
+					<option value="60">1h</option>
+				</select>
+				<label>Who should be contacted when time is up?</label>
+				<input
+					name="contact"
+					placeholder="Email"
+					type="text"
+					value={this.state.contact}
+					onChange={this.handleChange}
+				/>
+				<button type="submit">Create</button>
 			</form>
 		);
 	}

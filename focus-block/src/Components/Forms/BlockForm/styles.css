@@ -1,0 +1,49 @@
+form {
+	width: 50%;
+	border: 2px #979797 solid;
+	border-radius: 5px;
+	padding: 29px 10px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+form label {
+	font-size: 18px;
+}
+form input {
+	width: 75%;
+	height: 25px;
+	border: 0;
+	border-bottom: 2px #726d6d solid;
+	margin: 20px auto;
+	font-size: 16px;
+}
+form input:focus {
+	outline: none;
+	border-bottom-color: #5aca0e;
+}
+form select {
+	width: 75%;
+	height: 25px;
+	border: 0;
+	margin: 20px auto;
+	font-size: 16px;
+}
+form select:focus {
+	outline: none;
+}
+form button {
+	margin: 0 auto;
+	width: 50%;
+	height: 50px;
+	border: 2px solid #5aca0e;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+}
+form button:hover {
+	background-color: #5aca0e;
+	color: #fff;
+	opacity: 0.7;
+}

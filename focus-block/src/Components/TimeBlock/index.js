@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
+
+// Styles //
 import './styles.css';
 
 class TimeBlock extends Component {
+	// React Times bindings //
+
 	constructor(props) {
 		super(props);
-		/*
-			Id
-			Title
-			Timer
-		*/
+
+		// Timer logic //
+		let friendlyTimer;
+		if (props.block.timer < 60) {
+			friendlyTimer = `${props.block.timer}m`;
+		} else {
+			friendlyTimer = `${props.block.timer / 60}h`;
+		}
+
 		this.state = {
 			id: this.uuid(),
 			title: this.props.block.title,
-			timer: this.props.block.timer
+			timer: this.props.block.timer,
+			friendlyTimer: friendlyTimer,
+			contact: this.props.block.contact
 		};
+
+		console.log(this.state);
 	}
 
 	//-- Helpers --//
@@ -38,7 +50,10 @@ class TimeBlock extends Component {
 					<h1>{this.state.title}</h1>
 				</div>
 				<div className="block-time">
-					<h2>{this.state.timer}</h2>
+					<h2>{this.state.friendlyTimer}</h2>
+				</div>
+				<div className="block-contact">
+					<h2>{this.state.contact}</h2>
 				</div>
 				<button className="block-start" onClick={this.startBlock}>
 					Focus Time!
