@@ -13,6 +13,14 @@ form {
 		font-size: 18px;
 	}
 
+	.error-label {
+		color: red;
+		font-size: 14px;
+		text-align: left;
+		width: 75%;
+		margin: 10px auto;
+	}
+
 	input {
 		width: 75%;
 		height: 25px;
@@ -52,6 +60,13 @@ form {
 			background-color: #5aca0e;
 			color: #fff;
 			opacity: 0.7;
+		}
+
+		&:disabled {
+			border: 2px #726d6d solid;
+			background-color: #726d6d;
+			color: #000;
+			opacity: 0.3;
 		}
 	}
 }

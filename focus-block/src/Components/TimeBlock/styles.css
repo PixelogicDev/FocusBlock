@@ -1,6 +1,14 @@
 .block {
-  width: 400px;
-  height: 400px; }
+  width: 450px;
+  height: 300px;
+  border: 2px solid #979797;
+  border-radius: 5px; }
   .block .block-title,
-  .block .block-time {
+  .block .block-time,
+  .block .block-contact {
+    font-size: 24px;
     text-align: center; }
+  .block button {
+    margin: 0 auto;
+    height: 40px;
+    width: 100px; }

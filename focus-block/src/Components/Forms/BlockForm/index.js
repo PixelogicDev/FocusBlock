@@ -16,10 +16,14 @@ class BlockForm extends Component {
 	state = {
 		title: '',
 		timer: '15',
-		contact: ''
+		contact: '',
+		formErrors: { title: '', timer: '', contact: '' },
+		formValid: false
 	};
 
 	handleChange = event => {
+		this.validateField(event);
+
 		this.setState({
 			[event.target.name]: event.target.value
 		});
@@ -28,8 +32,64 @@ class BlockForm extends Component {
 	createBlock = event => {
 		console.log('Creating block...');
 		this.props.trigger(this.state);
-		this.setState({ title: '', timer: '' });
+		this.setState({
+			title: '',
+			timer: '15',
+			contact: '',
+			formErrors: {
+				title: '',
+				timer: '',
+				contact: ''
+			},
+			formValid: false
+		});
 		event.preventDefault();
+	};
+
+	validateField = event => {
+		let titleValid = this.state.formErrors.title;
+		let timerValid = this.state.formErrors.timer;
+		let contactValid = this.state.formErrors.contact;
+
+		switch (event.target.name) {
+			case 'title':
+				let titleLen = event.target.value.length;
+				titleValid = titleLen > 0 ? '' : 'Title cannot be empty';
+				console.log(titleValid);
+				break;
+			case 'timer':
+				console.log('Wait for custom input!');
+				break;
+			case 'contact':
+				let validContact = event.target.value.match(
+					/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
+				);
+				contactValid = validContact
+					? ''
+					: 'This is not an email, please try again.';
+				break;
+			default:
+				break;
+		}
+
+		this.formValid(titleValid, timerValid, contactValid);
+	};
+
+	formValid = (title, timer, contact) => {
+		let isFormValid = false;
+
+		if (title === '' && timer === '' && contact === '') {
+			isFormValid = true;
+		}
+
+		this.setState({
+			formErrors: {
+				title: title,
+				timer: timer,
+				contact: contact
+			},
+			formValid: isFormValid
+		});
 	};
 
 	render() {
@@ -43,6 +103,11 @@ class BlockForm extends Component {
 					value={this.state.title}
 					onChange={this.handleChange}
 				/>
+				{this.state.formErrors.title !== '' ? (
+					<div class="error-label">{this.state.formErrors.title}</div>
+				) : (
+					''
+				)}
 				<label>How long do you need to focus?</label>
 				<select name="timer" onChange={this.handleChange}>
 					<option value="15">15m</option>
@@ -50,6 +115,11 @@ class BlockForm extends Component {
 					<option value="45">45m</option>
 					<option value="60">1h</option>
 				</select>
+				{this.state.formErrors.timer !== '' ? (
+					<div class="error-label">{this.state.formErrors.timer}</div>
+				) : (
+					''
+				)}
 				<label>Who should be contacted when time is up?</label>
 				<input
 					name="contact"
@@ -58,7 +128,14 @@ class BlockForm extends Component {
 					value={this.state.contact}
 					onChange={this.handleChange}
 				/>
-				<button type="submit">Create</button>
+				{this.state.formErrors.contact !== '' ? (
+					<div class="error-label">{this.state.formErrors.contact}</div>
+				) : (
+					''
+				)}
+				<button disabled={!this.state.formValid} type="submit">
+					Create
+				</button>
 			</form>
 		);
 	}
