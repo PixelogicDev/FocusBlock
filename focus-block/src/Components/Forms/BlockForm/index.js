@@ -17,7 +17,7 @@ class BlockForm extends Component {
 		title: '',
 		timer: '15',
 		contact: '',
-		formErrors: { title: '', timer: '', contact: '' },
+		formErrors: { title: '', timer: 'valid', contact: '' },
 		formValid: false
 	};
 
@@ -38,11 +38,15 @@ class BlockForm extends Component {
 			contact: '',
 			formErrors: {
 				title: '',
-				timer: '',
+				timer: 'valid',
 				contact: ''
 			},
 			formValid: false
 		});
+
+		// Set selector back to 15 min //
+		document.getElementById('timer').selectedIndex = 0;
+
 		event.preventDefault();
 	};
 
@@ -54,18 +58,19 @@ class BlockForm extends Component {
 		switch (event.target.name) {
 			case 'title':
 				let titleLen = event.target.value.length;
-				titleValid = titleLen > 0 ? '' : 'Title cannot be empty';
-				console.log(titleValid);
+				titleValid = titleLen > 0 ? 'valid' : 'Title cannot be empty';
 				break;
 			case 'timer':
-				console.log('Wait for custom input!');
+				let timerLen = event.target.value.length;
+				timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
 				break;
 			case 'contact':
 				let validContact = event.target.value.match(
 					/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
 				);
+
 				contactValid = validContact
-					? ''
+					? 'valid'
 					: 'This is not an email, please try again.';
 				break;
 			default:
@@ -78,7 +83,7 @@ class BlockForm extends Component {
 	formValid = (title, timer, contact) => {
 		let isFormValid = false;
 
-		if (title === '' && timer === '' && contact === '') {
+		if (title === 'valid' && timer === 'valid' && contact === 'valid') {
 			isFormValid = true;
 		}
 
@@ -103,20 +108,20 @@ class BlockForm extends Component {
 					value={this.state.title}
 					onChange={this.handleChange}
 				/>
-				{this.state.formErrors.title !== '' ? (
-					<div class="error-label">{this.state.formErrors.title}</div>
+				{this.state.formErrors.title !== 'valid' ? (
+					<div className="error-label">{this.state.formErrors.title}</div>
 				) : (
 					''
 				)}
 				<label>How long do you need to focus?</label>
-				<select name="timer" onChange={this.handleChange}>
+				<select id="timer" name="timer" onChange={this.handleChange}>
 					<option value="15">15m</option>
 					<option value="30">30m</option>
 					<option value="45">45m</option>
 					<option value="60">1h</option>
 				</select>
-				{this.state.formErrors.timer !== '' ? (
-					<div class="error-label">{this.state.formErrors.timer}</div>
+				{this.state.formErrors.timer !== 'valid' ? (
+					<div className="error-label">{this.state.formErrors.timer}</div>
 				) : (
 					''
 				)}
@@ -128,8 +133,8 @@ class BlockForm extends Component {
 					value={this.state.contact}
 					onChange={this.handleChange}
 				/>
-				{this.state.formErrors.contact !== '' ? (
-					<div class="error-label">{this.state.formErrors.contact}</div>
+				{this.state.formErrors.contact !== 'valid' ? (
+					<div className="error-label">{this.state.formErrors.contact}</div>
 				) : (
 					''
 				)}
