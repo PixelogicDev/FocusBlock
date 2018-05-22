@@ -24,7 +24,6 @@ class Dashboard extends Component {
 					''
 				)}
 				<div className="blocks">
-					<TimeBlock block={this.mockBlock} />
 					{this.state.focusBlocks.map((block, i) => (
 						<TimeBlock block={block} key={i} />
 					))}

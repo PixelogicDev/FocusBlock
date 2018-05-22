@@ -7,11 +7,12 @@ class TimeBlock extends Component {
 	state = {
 		id: this.uuid(),
 		title: '',
-		timer: '',
+		timer: 0,
 		friendlyTimer: '',
 		contact: '',
 		contactShown: false,
-		blockStarted: false
+		blockStarted: false,
+		timerRef: null
 	};
 
 	constructor(props) {
@@ -51,6 +52,44 @@ class TimeBlock extends Component {
 		});
 
 		// Start timer //
+		this.toggleTimer();
+	};
+
+	toggleTimer = () => {
+		if (this.state.blockStarted) {
+			clearInterval(this.state.timerRef);
+		} else {
+			// Grab the current block minutes //
+			let blockTime = this.state.timer * 60,
+				minutes,
+				seconds;
+
+			// Setup a timer on comp to count down //
+			this.setState({
+				timerRef: setInterval(() => {
+					// MAD PROPS https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer //
+					let minutes = parseInt(blockTime / 60, 10);
+					let seconds = parseInt(blockTime % 60, 10);
+					let friendlyTimer = '';
+
+					minutes = minutes < 10 ? '0' + minutes : minutes;
+					seconds = seconds < 10 ? '0' + seconds : seconds;
+					friendlyTimer = minutes + ':' + seconds;
+
+					this.setState({
+						friendlyTimer: friendlyTimer
+					});
+
+					if (--blockTime < 0) {
+						// Send out email to contact //
+						this.setState({
+							friendlyTimer: 'Times up!'
+						});
+						clearInterval(this.state.timerRef);
+					}
+				}, 1000)
+			});
+		}
 	};
 
 	showHideContact = () => {
