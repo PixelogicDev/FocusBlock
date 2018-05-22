@@ -4,7 +4,15 @@ import React, { Component } from 'react';
 import './styles.css';
 
 class TimeBlock extends Component {
-	// React Times bindings //
+	state = {
+		id: this.uuid(),
+		title: '',
+		timer: '',
+		friendlyTimer: '',
+		contact: '',
+		contactShown: false,
+		blockStarted: false
+	};
 
 	constructor(props) {
 		super(props);
@@ -18,14 +26,12 @@ class TimeBlock extends Component {
 		}
 
 		this.state = {
-			id: this.uuid(),
 			title: this.props.block.title,
 			timer: this.props.block.timer,
 			friendlyTimer: friendlyTimer,
-			contact: this.props.block.contact
+			contact: this.props.block.contact,
+			contactShown: false
 		};
-
-		console.log(this.state);
 	}
 
 	//-- Helpers --//
@@ -39,25 +45,44 @@ class TimeBlock extends Component {
 		);
 	}
 
-	startBlock() {
-		console.log('Block is starting!!!');
-	}
+	startBlock = event => {
+		this.setState({
+			blockStarted: !this.state.blockStarted
+		});
+
+		// Start timer //
+	};
+
+	showHideContact = () => {
+		// Check to see if contact is shown //
+		this.setState({
+			contactShown: !this.state.contactShown
+		});
+	};
 
 	render() {
 		return (
 			<div className="block">
-				<div className="block-title">
-					<h1>{this.state.title}</h1>
+				<div className="content">
+					<div className="block-title">{this.state.title}</div>
+					<div className="block-time">{this.state.friendlyTimer}</div>
+					<div className="block-contact" onClick={this.showHideContact}>
+						{this.state.contactShown ? (
+							<span>{this.state.contact}</span>
+						) : (
+							<span>Click to show contact.</span>
+						)}
+					</div>
+					<div className="focus-button">
+						<button className="block-start" onClick={this.startBlock}>
+							{this.state.blockStarted ? (
+								<span>Stop Focusing</span>
+							) : (
+								<span>Get Focused</span>
+							)}
+						</button>
+					</div>
 				</div>
-				<div className="block-time">
-					<h2>{this.state.friendlyTimer}</h2>
-				</div>
-				<div className="block-contact">
-					<h2>{this.state.contact}</h2>
-				</div>
-				<button className="block-start" onClick={this.startBlock}>
-					Focus Time!
-				</button>
 			</div>
 		);
 	}

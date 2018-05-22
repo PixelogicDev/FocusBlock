@@ -1,14 +1,36 @@
 .block {
-  width: 450px;
-  height: 300px;
-  border: 2px solid #979797;
+  width: 560px;
+  height: 445px;
+  border: 3px solid #979797;
   border-radius: 5px; }
+  .block .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+  .block .block-title {
+    font-size: 60px;
+    margin-bottom: 25px; }
+  .block .block-time {
+    font-size: 80px; }
+  .block .block-contact {
+    font-size: 38px;
+    margin-bottom: 50px;
+    cursor: pointer; }
   .block .block-title,
   .block .block-time,
   .block .block-contact {
-    font-size: 24px;
     text-align: center; }
-  .block button {
-    margin: 0 auto;
-    height: 40px;
-    width: 100px; }
+  .block .focus-button {
+    text-align: center; }
+    .block .focus-button button {
+      height: 50px;
+      width: 265px;
+      font-size: 20px;
+      border: 2px solid #5aca0e;
+      border-radius: 5px;
+      cursor: pointer; }
+      .block .focus-button button:hover {
+        background-color: #5aca0e;
+        color: #fff;
+        opacity: 0.7; }
