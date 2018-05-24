@@ -16,6 +16,7 @@ class BlockForm extends Component {
 	state = {
 		title: '',
 		timer: '15',
+		customTimer: '15',
 		contact: '',
 		formErrors: { title: '', timer: 'valid', contact: '' },
 		formValid: false
@@ -23,7 +24,6 @@ class BlockForm extends Component {
 
 	handleChange = event => {
 		this.validateField(event);
-
 		this.setState({
 			[event.target.name]: event.target.value
 		});
@@ -35,6 +35,7 @@ class BlockForm extends Component {
 		this.setState({
 			title: '',
 			timer: '15',
+			customTimer: '15',
 			contact: '',
 			formErrors: {
 				title: '',
@@ -61,8 +62,13 @@ class BlockForm extends Component {
 				titleValid = titleLen > 0 ? 'valid' : 'Title cannot be empty';
 				break;
 			case 'timer':
-				let timerLen = event.target.value.length;
-				timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
+				if (event.target.value === 'custom') {
+					timerValid = 'valid';
+				} else {
+					let timerLen = event.target.value.length;
+					timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
+				}
+
 				break;
 			case 'contact':
 				let validContact = event.target.value.match(
@@ -119,7 +125,19 @@ class BlockForm extends Component {
 					<option value="30">30m</option>
 					<option value="45">45m</option>
 					<option value="60">1h</option>
+					<option value="custom">Custom</option>
 				</select>
+				{this.state.timer === 'custom' ? (
+					<input
+						name="customTimer"
+						placeholder="Time in mins"
+						type="number"
+						value={this.state.customTimer}
+						onChange={this.handleChange}
+					/>
+				) : (
+					''
+				)}
 				{this.state.formErrors.timer !== 'valid' ? (
 					<div className="error-label">{this.state.formErrors.timer}</div>
 				) : (

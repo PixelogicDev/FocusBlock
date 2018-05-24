@@ -8,6 +8,7 @@ class TimeBlock extends Component {
 		id: this.uuid(),
 		title: '',
 		timer: 0,
+		customTimer: 0,
 		friendlyTimer: '',
 		contact: '',
 		contactShown: false,
@@ -19,16 +20,13 @@ class TimeBlock extends Component {
 		super(props);
 
 		// Timer logic //
-		let friendlyTimer;
-		if (props.block.timer < 60) {
-			friendlyTimer = `${props.block.timer}m`;
-		} else {
-			friendlyTimer = `${props.block.timer / 60}h`;
-		}
+		let friendlyTimer = this.getFriendlyTime(this.props.block);
 
 		this.state = {
 			title: this.props.block.title,
 			timer: this.props.block.timer,
+			// MAD PROPS DigitalData (found the un-findable bug) //
+			customTimer: this.props.block.customTimer,
 			friendlyTimer: friendlyTimer,
 			contact: this.props.block.contact,
 			contactShown: false
@@ -36,6 +34,25 @@ class TimeBlock extends Component {
 	}
 
 	//-- Helpers --//
+	getFriendlyTime = block => {
+		let friendlyTimer = '';
+		let timerVal;
+
+		if (block.timer === 'custom') {
+			timerVal = block.customTimer;
+		} else {
+			timerVal = block.timer;
+		}
+
+		if (timerVal < 60) {
+			friendlyTimer = `${timerVal}m`;
+		} else {
+			friendlyTimer = `${timerVal / 60}h`;
+		}
+
+		return friendlyTimer;
+	};
+
 	// MAD PROPS: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript#answer-2117523 //
 	uuid() {
 		return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
@@ -46,7 +63,7 @@ class TimeBlock extends Component {
 		);
 	}
 
-	startBlock = event => {
+	startBlock = () => {
 		this.setState({
 			blockStarted: !this.state.blockStarted
 		});
@@ -60,7 +77,15 @@ class TimeBlock extends Component {
 			clearInterval(this.state.timerRef);
 		} else {
 			// Grab the current block minutes //
-			let blockTime = this.state.timer * 60,
+			let timerVal;
+
+			if (this.state.timer === 'custom') {
+				timerVal = this.state.customTimer;
+			} else {
+				timerVal = this.state.timer;
+			}
+
+			let blockTime = timerVal * 60,
 				minutes,
 				seconds;
 
