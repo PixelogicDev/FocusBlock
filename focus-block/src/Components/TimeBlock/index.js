@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Email from '../../Containers/SmtpContainer';
 
 // Styles //
 import './styles.css';
@@ -72,6 +73,26 @@ class TimeBlock extends Component {
 		this.toggleTimer();
 	};
 
+	sendEmail = () => {
+		// Send out email //
+		let mailer = new Email();
+		let sender = 'support@pixelogocapps.com';
+		let subject = 'Requesting Help!';
+		//TODO: Figure out how to get username/name/title/etx
+		let body = `FooBar is requesting your help with ${this.state.title}!`;
+		let server = 'smtp.sendgrid.net';
+
+		mailer.send(
+			sender,
+			this.state.contact,
+			subject,
+			body,
+			server,
+			process.env.REACT_APP_SMTP_USERNAME,
+			process.env.REACT_APP_SMTP_PW
+		);
+	};
+
 	toggleTimer = () => {
 		if (this.state.blockStarted) {
 			clearInterval(this.state.timerRef);
@@ -93,8 +114,8 @@ class TimeBlock extends Component {
 			this.setState({
 				timerRef: setInterval(() => {
 					// MAD PROPS https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer //
-					let minutes = parseInt(blockTime / 60, 10);
-					let seconds = parseInt(blockTime % 60, 10);
+					minutes = parseInt(blockTime / 60, 10);
+					seconds = parseInt(blockTime % 60, 10);
 					let friendlyTimer = '';
 
 					minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -106,10 +127,11 @@ class TimeBlock extends Component {
 					});
 
 					if (--blockTime < 0) {
-						// Send out email to contact //
 						this.setState({
 							friendlyTimer: 'Times up!'
 						});
+
+						this.sendEmail();
 						clearInterval(this.state.timerRef);
 					}
 				}, 1000)

@@ -15,3 +15,13 @@ An app that helps you time block a task and contact someone if you still have no
 4.  Press start time block then cool block animation plays as timer counts down
 5.  If time runs out before selecting "I'm Done" button, automatically contact person listed
 6.  If selecting "I'm Done" before time runs out, you are greeted with a well done message
+
+### Libraries
+
+`https://smtpjs.com/` ---> SMTP email service
+`https://sendgrid.com/` ---> SMTP Server
+
+### Credentials
+
+`REACT_APP_SMTP_USERNAME` ---> SMTP Username for SMTPJS (From Sengrid)
+`REACT_APP_SMTP_PW` ---> SMTP Password for SMTPJS (From Sengrid)
