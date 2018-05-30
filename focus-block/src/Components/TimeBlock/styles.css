@@ -34,3 +34,36 @@
         background-color: #5aca0e;
         color: #fff;
         opacity: 0.7; }
+
+.start {
+  animation: start-progress 40s infinite; }
+
+@keyframes start-progress {
+  0% {
+    background-color: #fff; }
+  50% {
+    background-color: #aaf69c; }
+  100% {
+    background-color: #fff; } }
+
+.mid {
+  animation: mid-progress 35s infinite; }
+
+@keyframes mid-progress {
+  0% {
+    background-color: #fff; }
+  50% {
+    background-color: #fcfca8; }
+  100% {
+    background-color: #fff; } }
+
+.end {
+  animation: end-progress 35s infinite; }
+
+@keyframes end-progress {
+  0% {
+    background-color: #fff; }
+  50% {
+    background-color: #fb9595; }
+  100% {
+    background-color: #fff; } }

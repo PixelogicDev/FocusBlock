@@ -1,3 +1,28 @@
+// Color //
+$start-color: #aaf69c;
+$mid-color: #fcfca8;
+$end-color: #fb9595;
+
+// KeyFrame Mixin //
+@mixin status-keyframe-animation($progress, $status-color, $interval) {
+	animation: $progress $interval infinite;
+
+	//-- MAD PROPS brutusharvenius--//
+	@keyframes #{$progress} {
+		0% {
+			background-color: #fff;
+		}
+
+		50% {
+			background-color: $status-color;
+		}
+
+		100% {
+			background-color: #fff;
+		}
+	}
+}
+
 .block {
 	width: 560px;
 	height: 445px;
@@ -50,4 +75,16 @@
 			}
 		}
 	}
+}
+
+.start {
+	@include status-keyframe-animation(start-progress, $start-color, 40s);
+}
+
+.mid {
+	@include status-keyframe-animation(mid-progress, $mid-color, 35s);
+}
+
+.end {
+	@include status-keyframe-animation(end-progress, $end-color, 35s);
 }

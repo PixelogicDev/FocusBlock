@@ -6,7 +6,7 @@ import './styles.css';
 
 class TimeBlock extends Component {
 	state = {
-		id: this.uuid(),
+		id: '',
 		title: '',
 		timer: 0,
 		customTimer: 0,
@@ -14,7 +14,8 @@ class TimeBlock extends Component {
 		contact: '',
 		contactShown: false,
 		blockStarted: false,
-		timerRef: null
+		timerRef: null,
+		currentProgress: ''
 	};
 
 	constructor(props) {
@@ -24,13 +25,17 @@ class TimeBlock extends Component {
 		let friendlyTimer = this.getFriendlyTime(this.props.block);
 
 		this.state = {
+			id: this.uuid(),
 			title: this.props.block.title,
 			timer: this.props.block.timer,
 			// MAD PROPS DigitalData (found the un-findable bug) //
 			customTimer: this.props.block.customTimer,
 			friendlyTimer: friendlyTimer,
 			contact: this.props.block.contact,
-			contactShown: false
+			contactShown: false,
+			blockStarted: false,
+			timerRef: null,
+			currentProgress: 'start'
 		};
 	}
 
@@ -116,18 +121,32 @@ class TimeBlock extends Component {
 					// MAD PROPS https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer //
 					minutes = parseInt(blockTime / 60, 10);
 					seconds = parseInt(blockTime % 60, 10);
-					let friendlyTimer = '';
 
+					let currentProgress = 'start';
+					// TODO: This is still broken!
+					if (parseInt(timerVal / 2, 10) === minutes) {
+						// Mid point //
+						currentProgress = 'mid';
+					}
+
+					if (minutes === 0) {
+						// End point //
+						currentProgress = 'end';
+					}
+
+					let friendlyTimer = '';
 					minutes = minutes < 10 ? '0' + minutes : minutes;
 					seconds = seconds < 10 ? '0' + seconds : seconds;
 					friendlyTimer = minutes + ':' + seconds;
 
 					this.setState({
-						friendlyTimer: friendlyTimer
+						friendlyTimer: friendlyTimer,
+						currentProgress: currentProgress
 					});
 
 					if (--blockTime < 0) {
 						this.setState({
+							blockStarted: false,
 							friendlyTimer: 'Times up!'
 						});
 
@@ -147,8 +166,16 @@ class TimeBlock extends Component {
 	};
 
 	render() {
+		const classNames = require('classnames');
+
+		let classes = classNames('block', {
+			start: this.state.currentProgress === 'start' && this.state.blockStarted,
+			mid: this.state.currentProgress === 'mid' && this.state.blockStarted,
+			end: this.state.currentProgress === 'end' && this.state.blockStarted
+		});
+
 		return (
-			<div className="block">
+			<div className={classes}>
 				<div className="content">
 					<div className="block-title">{this.state.title}</div>
 					<div className="block-time">{this.state.friendlyTimer}</div>
