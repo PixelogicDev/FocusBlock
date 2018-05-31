@@ -71,7 +71,8 @@ class TimeBlock extends Component {
 
 	startBlock = () => {
 		this.setState({
-			blockStarted: !this.state.blockStarted
+			blockStarted: !this.state.blockStarted,
+			currentProgress: 'start'
 		});
 
 		// Start timer //
