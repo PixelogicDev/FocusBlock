@@ -78,13 +78,13 @@ $end-color: #fb9595;
 }
 
 .start {
-	@include status-keyframe-animation(start-progress, $start-color, 40s);
+	@include status-keyframe-animation(start-progress, $start-color, 25s);
 }
 
 .mid {
-	@include status-keyframe-animation(mid-progress, $mid-color, 35s);
+	@include status-keyframe-animation(mid-progress, $mid-color, 20s);
 }
 
 .end {
-	@include status-keyframe-animation(end-progress, $end-color, 35s);
+	@include status-keyframe-animation(end-progress, $end-color, 15s);
 }

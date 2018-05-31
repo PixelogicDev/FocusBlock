@@ -122,8 +122,7 @@ class TimeBlock extends Component {
 					minutes = parseInt(blockTime / 60, 10);
 					seconds = parseInt(blockTime % 60, 10);
 
-					let currentProgress = 'start';
-					// TODO: This is still broken!
+					let currentProgress = this.state.currentProgress;
 					if (parseInt(timerVal / 2, 10) === minutes) {
 						// Mid point //
 						currentProgress = 'mid';
