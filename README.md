@@ -6,6 +6,7 @@ An app that helps you time block a task and contact someone if you still have no
 
 **Client**: React v16.3.2<br>
 **Server**: Node.js v8.9.4<br>
+**Database**: MongoDB(Node Drive v3.4.3)
 
 ### App Flow
 
