@@ -19,15 +19,17 @@ class Dashboard extends Component {
 		return (
 			<Fragment>
 				{this.state.focusBlocks.length === 0 ? (
-					<BlockForm trigger={this.createBlock} />
+					<Fragment>
+						<h2>Don’t get stuck on a task! Create a FocusBlock now.</h2>
+						<BlockForm trigger={this.createBlock} />
+					</Fragment>
 				) : (
-					''
+					<div className="blocks">
+						{this.state.focusBlocks.map((block, i) => (
+							<TimeBlock block={block} key={i} />
+						))}
+					</div>
 				)}
-				<div className="blocks">
-					{this.state.focusBlocks.map((block, i) => (
-						<TimeBlock block={block} key={i} />
-					))}
-				</div>
 			</Fragment>
 		);
 	}

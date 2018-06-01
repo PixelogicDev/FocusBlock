@@ -48,6 +48,19 @@ class BlockForm extends Component {
 		// Set selector back to 15 min //
 		document.getElementById('timer').selectedIndex = 0;
 
+		/* let form = document.getElementById('blockForm');
+
+		// Add event listener //
+		form.addEventListener('transitionend', event => {
+			form.style.display = 'none';
+		});
+
+		// Set transition //
+		Object.assign(form.style, {
+			transform: 'translateX(-150%)',
+			transition: 'all 2s'
+		}); */
+
 		event.preventDefault();
 	};
 
@@ -105,7 +118,7 @@ class BlockForm extends Component {
 
 	render() {
 		return (
-			<form onSubmit={this.createBlock}>
+			<form id="blockForm" onSubmit={this.createBlock}>
 				<label>What are you focusing on?</label>
 				<input
 					name="title"

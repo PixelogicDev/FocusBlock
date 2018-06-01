@@ -1,0 +1,17 @@
+.nav {
+	border-bottom: 1px solid #979797;
+
+	h1 {
+		margin-left: 15px;
+	}
+}
+
+//-- MAD PROPS brutusharvenius (Flex box GOD)--//
+.content {
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	flex-direction: column;
+	height: 100%;
+	background: linear-gradient(#f2f4ff, #d4dbf6);
+}

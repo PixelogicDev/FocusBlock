@@ -16,6 +16,7 @@ class TimeBlock extends Component {
 		blockStarted: false,
 		timerRef: null,
 		currentProgress: ''
+		// didFinishTransition: false
 	};
 
 	constructor(props) {
@@ -36,8 +37,21 @@ class TimeBlock extends Component {
 			blockStarted: false,
 			timerRef: null,
 			currentProgress: 'start'
+			// didFinishTransition: false
 		};
 	}
+
+	/* componentDidMount() {
+		// Set event listener on transition //
+		let block = document.getElementById(this.state.id);
+
+		block.addEventListener('transitionend', event => {
+			console.log('listener hit');
+			this.setState({
+				didFinishTransition: true
+			});
+		});
+	} */
 
 	//-- Helpers --//
 	getFriendlyTime = block => {
@@ -172,11 +186,12 @@ class TimeBlock extends Component {
 			start: this.state.currentProgress === 'start' && this.state.blockStarted,
 			mid: this.state.currentProgress === 'mid' && this.state.blockStarted,
 			end: this.state.currentProgress === 'end' && this.state.blockStarted
+			// transition: !this.state.didFinishTransition
 		});
 
 		return (
-			<div className={classes}>
-				<div className="content">
+			<div id={this.state.id} className={classes}>
+				<div className="block-content">
 					<div className="block-title">{this.state.title}</div>
 					<div className="block-time">{this.state.friendlyTimer}</div>
 					<div className="block-contact" onClick={this.showHideContact}>

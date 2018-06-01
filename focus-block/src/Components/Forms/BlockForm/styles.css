@@ -1,12 +1,12 @@
 form {
   width: 50%;
-  border: 2px #979797 solid;
   border-radius: 5px;
   padding: 29px 10px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  text-align: center; }
+  text-align: center;
+  background-color: #fff; }
   form label {
     font-size: 18px; }
   form .error-label {
