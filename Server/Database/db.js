@@ -1,27 +1,45 @@
 const MongoClient = require('mongodb').MongoClient;
 var db;
 
-MongoClient.connect('mongodb://localhost:27017/focusblock', (error, client) => {
-	if (error) throw error;
+MongoClient.connect(
+	'mongodb://localhost:27017/focusblock',
+	(error, client) => {
+		if (error) throw error;
 
-	console.log('Connected to FocusBlock DB');
-	// TODO: Create .env file //
-	db = client.db('focusblock');
-});
+		console.log('Connected to FocusBlock DB');
+		// TODO: Create .env file //
+		db = client.db(process.env.DB_NAME);
+	}
+);
 
 module.exports = {
 	addUser: user => {
 		return new Promise((resolve, reject) => {
-			console.log('[db.addUser] Starting to add user.');
+			console.log('[db.addUser] Starting to add user...');
 
 			let collection = db.collection('users');
 
 			collection.insertOne(user, (insertError, data) => {
-				return reject(insertError);
+				//-- MAD PROPS panthalassadigital --//
+				if (insertError) return reject(insertError);
 			});
 
 			console.log('[db.addUser] New user added.');
-			return resolve(200);
+			return resolve(user.url);
+		});
+	},
+
+	findUser: id => {
+		return new Promise((resolve, reject) => {
+			console.log('[db.findUser] Looking for user...');
+
+			let collection = db.collection('users');
+
+			collection.findOne({ _id: id }, null, (error, result) => {
+				if (error) return reject(error);
+				console.log('Returning user.');
+				return resolve(result);
+			});
 		});
 	}
 };
