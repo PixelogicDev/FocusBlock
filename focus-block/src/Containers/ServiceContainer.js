@@ -2,9 +2,8 @@ import { Component } from 'react';
 
 class ServiceContainer extends Component {
 	createUser = () => {
-		fetch(
-			'http://localhost:8000/new',
-			{
+		return new Promise((resolve, reject) => {
+			let json = fetch(`${process.env.REACT_APP_API_BASE}/new`, {
 				body: JSON.stringify({ name: 'Alec' }),
 				credentials: 'omit',
 				headers: {
@@ -12,23 +11,31 @@ class ServiceContainer extends Component {
 				},
 				method: 'POST',
 				mode: 'cors'
-			},
-			response => {
-				console.log(response);
-			}
-		);
+			}).then(response => {
+				// return response.json();
+			});
+
+			json.then(data => {
+				if (data) return resolve(data);
+				return reject('User could not be created.');
+			});
+		});
 	};
 
 	getUser = id => {
 		return new Promise((resolve, reject) => {
 			console.log(`Getting user with id: ${id}...`);
 
-			fetch(`http://localhost:8000/${id}`, response => {
-				if (response) {
-					return resolve(response);
+			//-- MAD PROPS for brutusharvenius -- //
+			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`).then(
+				response => {
+					return response.json();
 				}
+			);
 
-				return reject('User not found.');
+			json.then(data => {
+				if (data) return resolve(data);
+				return reject('User was not found');
 			});
 		});
 	};
