@@ -12,7 +12,7 @@ class ServiceContainer extends Component {
 				method: 'POST',
 				mode: 'cors'
 			}).then(response => {
-				// return response.json();
+				return response.json();
 			});
 
 			json.then(data => {

@@ -30,31 +30,33 @@ class Dashboard extends Component {
 		let userId = this.getUserId(window.location.pathname);
 		if (userId) {
 			console.log('Found user');
-			service.getUser(userId).then((result, error) => {
-				if (error) {
+			service
+				.getUser(userId)
+				.then(result => {
+					this.setState({ user: result });
+					console.log('User received.');
+				})
+				.catch(error => {
 					console.log(error);
-					return;
-				}
-
-				this.setState({ user: result });
-			});
+				});
 		} else {
 			console.log('Creating user...');
-			service.createUser().then((result, error) => {
-				if (error) {
+			service
+				.createUser()
+				.then(result => {
+					this.setState({ user: result });
+					console.log('User created.');
+				})
+				.catch(error => {
 					console.log(error);
-					return;
-				}
-
-				this.setState({ user: result });
-			});
+				});
 		}
 	}
 
 	//-- Helpers --//
 	createBlock = focusBlock => {
 		// Get current array //
-		let currentBlocks = this.state.focusBlocks;
+		let currentBlocks = this.state.user.focusBlocks;
 		currentBlocks.push(focusBlock);
 		this.setState({ focusBlocks: currentBlocks });
 	};
@@ -62,11 +64,9 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<Fragment>
+				<h2>Don’t get stuck on a task! Create a FocusBlock now.</h2>
 				{this.state.user.focusBlocks.length === 0 ? (
-					<Fragment>
-						<h2>Don’t get stuck on a task! Create a FocusBlock now.</h2>
-						<BlockForm trigger={this.createBlock} />
-					</Fragment>
+					<BlockForm trigger={this.createBlock} />
 				) : (
 					<div className="blocks">
 						{this.state.user.focusBlocks.map((block, i) => (
@@ -74,6 +74,14 @@ class Dashboard extends Component {
 						))}
 					</div>
 				)}
+				<div className="custom-url">
+					<h3>
+						Use this URL to come back to your saved FocusBlocks:{' '}
+						<a target="_blank" href={this.state.user.url}>
+							{this.state.user.url}
+						</a>
+					</h3>
+				</div>
 			</Fragment>
 		);
 	}

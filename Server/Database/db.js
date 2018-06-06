@@ -25,7 +25,7 @@ module.exports = {
 			});
 
 			console.log('[db.addUser] New user added.');
-			return resolve(user.url);
+			return resolve(user);
 		});
 	},
 

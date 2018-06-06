@@ -48,6 +48,8 @@ class BlockForm extends Component {
 		// Set selector back to 15 min //
 		document.getElementById('timer').selectedIndex = 0;
 
+		event.preventDefault();
+
 		/* let form = document.getElementById('blockForm');
 
 		// Add event listener //
@@ -60,8 +62,6 @@ class BlockForm extends Component {
 			transform: 'translateX(-150%)',
 			transition: 'all 2s'
 		}); */
-
-		event.preventDefault();
 	};
 
 	validateField = event => {
