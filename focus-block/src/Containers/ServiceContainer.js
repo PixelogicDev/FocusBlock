@@ -39,6 +39,29 @@ class ServiceContainer extends Component {
 			});
 		});
 	};
+
+	updateUser = (id, focusBlocks) => {
+		return new Promise((resolve, reject) => {
+			console.log(`Updating user with id: ${id}...`);
+
+			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`, {
+				body: JSON.stringify({ focusBlocks: focusBlocks }),
+				credentials: 'omit',
+				headers: {
+					'content-type': 'application/json'
+				},
+				method: 'POST',
+				mode: 'cors'
+			}).then(response => {
+				return response.json();
+			});
+
+			json.then(data => {
+				if (data) return resolve(data);
+				return reject('User could not be created.');
+			});
+		});
+	};
 }
 
 export default ServiceContainer;

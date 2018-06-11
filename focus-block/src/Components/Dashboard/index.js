@@ -10,7 +10,8 @@ class Dashboard extends Component {
 			name: '',
 			url: '',
 			focusBlocks: []
-		}
+		},
+		service: new ServiceContainer()
 	};
 
 	getUserId = path => {
@@ -24,13 +25,11 @@ class Dashboard extends Component {
 	};
 
 	componentDidMount() {
-		let service = new ServiceContainer();
-
 		// Check for user //
 		let userId = this.getUserId(window.location.pathname);
 		if (userId) {
 			console.log('Found user');
-			service
+			this.state.service
 				.getUser(userId)
 				.then(result => {
 					this.setState({ user: result });
@@ -41,7 +40,7 @@ class Dashboard extends Component {
 				});
 		} else {
 			console.log('Creating user...');
-			service
+			this.state.service
 				.createUser()
 				.then(result => {
 					this.setState({ user: result });
@@ -59,6 +58,14 @@ class Dashboard extends Component {
 		let currentBlocks = this.state.user.focusBlocks;
 		currentBlocks.push(focusBlock);
 		this.setState({ focusBlocks: currentBlocks });
+		this.state.service
+			.updateUser(this.state.user._id, currentBlocks)
+			.then(result => {
+				console.log(result);
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	};
 
 	render() {

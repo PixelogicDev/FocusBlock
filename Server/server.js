@@ -1,11 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const server = express();
+const bodyParser = require('body-parser');
 const db = require('./Database/db');
 const shortid = require('shortid');
 const cors = require('cors');
 
 server.use(cors());
+server.use(bodyParser.json());
 server.get('/', (req, res) => {
 	res.send('Welcome to FocusBlock Server');
 });
@@ -39,6 +41,19 @@ server.get('/:id', async (req, res) => {
 	});
 
 	res.send(user);
+});
+
+server.post('/:id', async (req, res) => {
+	// Get json body //
+	let data = {
+		id: req.params.id,
+		focusBlocks: req.body.focusBlocks
+	};
+
+	let result = await db.updateUser(data).catch(error => {
+		throw error;
+	});
+	res.send({ result: result });
 });
 
 server.listen(8000, () => {

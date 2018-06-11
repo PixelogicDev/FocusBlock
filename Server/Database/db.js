@@ -41,5 +41,23 @@ module.exports = {
 				return resolve(result);
 			});
 		});
+	},
+
+	updateUser: data => {
+		return new Promise((resolve, reject) => {
+			console.log('[db.updateUser] Updating user...');
+
+			let collection = db.collection('users');
+
+			collection.update(
+				{ _id: data.id },
+				{ $set: { focusBlocks: data.focusBlocks } },
+				(error, result) => {
+					if (error) return reject(error);
+					console.log('User updated.');
+					return resolve(result);
+				}
+			);
+		});
 	}
 };
