@@ -37,45 +37,73 @@ $end-color: #fb9595;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-	}
 
-	.block-title {
-		font-size: 60px;
-		margin-bottom: 25px;
-	}
+		.block-title {
+			font-size: 60px;
+			margin-bottom: 25px;
+		}
 
-	.block-time {
-		font-size: 80px;
-	}
+		.block-time {
+			font-size: 80px;
+		}
 
-	.block-contact {
-		font-size: 38px;
-		margin-bottom: 50px;
-		cursor: pointer;
-	}
-
-	.block-title,
-	.block-time,
-	.block-contact {
-		text-align: center;
-	}
-
-	.focus-button {
-		text-align: center;
-
-		button {
-			height: 50px;
-			width: 265px;
-			font-size: 20px;
-			border: 2px solid #5aca0e;
-			border-radius: 5px;
+		.block-contact {
+			font-size: 38px;
+			margin-bottom: 50px;
 			cursor: pointer;
 
-			&:hover {
-				background-color: #5aca0e;
-				color: #fff;
-				opacity: 0.7;
+			.contact-input {
+				width: 75%;
+				height: 25px;
+				border: 0;
+				border-bottom: 2px #726d6d solid;
+				margin: 20px auto;
+				font-size: 16px;
+
+				&:focus {
+					outline: none;
+					border-bottom-color: #5aca0e;
+				}
 			}
+		}
+
+		.error-label {
+			color: red;
+			font-size: 14px;
+			text-align: center;
+			width: 75%;
+			margin: 10px auto;
+		}
+
+		.block-title,
+		.block-time,
+		.block-contact {
+			text-align: center;
+		}
+
+		.focus-button {
+			text-align: center;
+
+			button {
+				height: 50px;
+				width: 265px;
+				font-size: 20px;
+				border: 2px solid #5aca0e;
+				border-radius: 5px;
+				cursor: pointer;
+
+				&:hover {
+					background-color: #5aca0e;
+					color: #fff;
+					opacity: 0.7;
+				}
+			}
+		}
+
+		.edit {
+			position: relative;
+			text-align: right;
+			top: 50px;
 		}
 	}
 }

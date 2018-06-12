@@ -22,6 +22,22 @@ class BlockForm extends Component {
 		formValid: false
 	};
 
+	componentDidMount() {
+		if (this.props.isEdit) {
+			// TODO: Finish up edit form //
+			this.setState({
+				title: this.props.focusBlock.title,
+				timer: this.props.focusBlock.timer,
+				customTimer: this.props.focusBlock.custom,
+				contact: this.props.focusBlock.contact,
+				formErrors: { title: '', timer: 'valid', contact: '' },
+				formValid: false
+			});
+		} else {
+			// Setup view to create a new block //
+		}
+	}
+
 	handleChange = event => {
 		this.validateField(event);
 		this.setState({

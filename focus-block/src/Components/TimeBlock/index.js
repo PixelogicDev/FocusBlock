@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import BlockForm from '../Forms/BlockForm/index';
 import Email from '../../Containers/SmtpContainer';
 
 // Styles //
@@ -15,7 +16,9 @@ class TimeBlock extends Component {
 		contactShown: false,
 		blockStarted: false,
 		timerRef: null,
-		currentProgress: ''
+		currentProgress: '',
+		isEdit: false,
+		inputErrors: { contact: 'valid' }
 		// didFinishTransition: false
 	};
 
@@ -36,7 +39,9 @@ class TimeBlock extends Component {
 			contactShown: false,
 			blockStarted: false,
 			timerRef: null,
-			currentProgress: 'start'
+			currentProgress: 'start',
+			isEdit: false,
+			inputErrors: { contact: 'valid' }
 			// didFinishTransition: false
 		};
 	}
@@ -98,7 +103,7 @@ class TimeBlock extends Component {
 		let mailer = new Email();
 		let sender = 'support@pixelogocapps.com';
 		let subject = 'Requesting Help!';
-		//TODO: Figure out how to get username/name/title/etx
+		//TODO: Figure out how to get username/name/title/etc
 		let body = `FooBar is requesting your help with ${this.state.title}!`;
 		let server = 'smtp.sendgrid.net';
 
@@ -172,11 +177,33 @@ class TimeBlock extends Component {
 		}
 	};
 
-	showHideContact = () => {
-		// Check to see if contact is shown //
+	contactBlur = event => {
+		let targetVal = event.target.value;
+		let validContact = targetVal.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+
+		if (validContact) {
+			this.setState({
+				contact: targetVal,
+				contactShown: true,
+				inputErrors: { contact: 'valid' }
+			});
+		} else {
+			this.setState({
+				inputErrors: { contact: 'Please enter a valid email.' }
+			});
+		}
+	};
+
+	showHideContact = event => {
 		this.setState({
 			contactShown: !this.state.contactShown
 		});
+	};
+
+	editBlock = () => {
+		console.log('Starting edit...');
+
+		this.setState({ isEdit: !this.state.isEdit });
 	};
 
 	render() {
@@ -190,28 +217,64 @@ class TimeBlock extends Component {
 		});
 
 		return (
-			<div id={this.state.id} className={classes}>
-				<div className="block-content">
-					<div className="block-title">{this.state.title}</div>
-					<div className="block-time">{this.state.friendlyTimer}</div>
-					<div className="block-contact" onClick={this.showHideContact}>
-						{this.state.contactShown ? (
-							<span>{this.state.contact}</span>
-						) : (
-							<span>Click to show contact.</span>
-						)}
-					</div>
-					<div className="focus-button">
-						<button className="block-start" onClick={this.startBlock}>
-							{this.state.blockStarted ? (
-								<span>Stop Focusing</span>
+			<Fragment>
+				{this.state.isEdit ? (
+					<BlockForm isEdit="true" focusBlock={this.state} />
+				) : (
+					<div id={this.state.id} className={classes}>
+						<div className="block-content">
+							<div className="block-title">{this.state.title}</div>
+							<div className="block-time">{this.state.friendlyTimer}</div>
+							<div className="block-contact">
+								{this.state.contactShown ? (
+									[
+										this.state.contact === '' ? (
+											// MAD PROPS Lumie1337 //
+											<input
+												key="new_contact"
+												onBlur={this.contactBlur}
+												placeholder="Email"
+												className="contact-input"
+											/>
+										) : (
+											<span
+												key="current_contact"
+												onClick={this.showHideContact}
+											>
+												{this.state.contact}
+											</span>
+										)
+									]
+								) : (
+									// If contact is empty, show input field to add contact //
+									<span onClick={this.showHideContact}>
+										Click to show contact.
+									</span>
+								)}
+							</div>
+							{this.state.inputErrors.contact !== 'valid' ? (
+								<div className="error-label">
+									{this.state.inputErrors.contact}
+								</div>
 							) : (
-								<span>Get Focused</span>
+								''
 							)}
-						</button>
+							<div className="focus-button">
+								<button className="block-start" onClick={this.startBlock}>
+									{this.state.blockStarted ? (
+										<span>Stop Focusing</span>
+									) : (
+										<span>Get Focused</span>
+									)}
+								</button>
+							</div>
+							<div className="edit">
+								<button onClick={this.editBlock}>EDIT</button>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+				)}
+			</Fragment>
 		);
 	}
 }

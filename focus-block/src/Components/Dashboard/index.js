@@ -58,14 +58,42 @@ class Dashboard extends Component {
 		let currentBlocks = this.state.user.focusBlocks;
 		currentBlocks.push(focusBlock);
 		this.setState({ focusBlocks: currentBlocks });
+
+		// Get clone of blocks and push to db //
+		let cloneBlocks = this.blockCloner(currentBlocks);
+
 		this.state.service
-			.updateUser(this.state.user._id, currentBlocks)
+			.updateUser(this.state.user._id, cloneBlocks)
 			.then(result => {
 				console.log(result);
 			})
 			.catch(error => {
 				console.log(error);
 			});
+	};
+
+	blockCloner = blocks => {
+		let cloneArray = [];
+
+		blocks.forEach(block => {
+			let cloneBlock = {
+				id: block.id,
+				title: block.title,
+				timer: block.timer,
+				customTimer: block.customTimer,
+				friendlyTimer: block.friendlyTimer,
+				contact: '',
+				contactShown: block.contactShown,
+				blockStarted: block.blockStarted,
+				timerRef: block.timerRef,
+				currentProgress: block.currentProgress,
+				isEdit: block.isEdit
+			};
+
+			cloneArray.push(cloneBlock);
+		});
+
+		return cloneArray;
 	};
 
 	render() {

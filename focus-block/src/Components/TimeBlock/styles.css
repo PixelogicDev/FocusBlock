@@ -11,32 +11,52 @@
     display: flex;
     flex-direction: column;
     justify-content: center; }
-  .block .block-title {
-    font-size: 60px;
-    margin-bottom: 25px; }
-  .block .block-time {
-    font-size: 80px; }
-  .block .block-contact {
-    font-size: 38px;
-    margin-bottom: 50px;
-    cursor: pointer; }
-  .block .block-title,
-  .block .block-time,
-  .block .block-contact {
-    text-align: center; }
-  .block .focus-button {
-    text-align: center; }
-    .block .focus-button button {
-      height: 50px;
-      width: 265px;
-      font-size: 20px;
-      border: 2px solid #5aca0e;
-      border-radius: 5px;
+    .block .block-content .block-title {
+      font-size: 60px;
+      margin-bottom: 25px; }
+    .block .block-content .block-time {
+      font-size: 80px; }
+    .block .block-content .block-contact {
+      font-size: 38px;
+      margin-bottom: 50px;
       cursor: pointer; }
-      .block .focus-button button:hover {
-        background-color: #5aca0e;
-        color: #fff;
-        opacity: 0.7; }
+      .block .block-content .block-contact .contact-input {
+        width: 75%;
+        height: 25px;
+        border: 0;
+        border-bottom: 2px #726d6d solid;
+        margin: 20px auto;
+        font-size: 16px; }
+        .block .block-content .block-contact .contact-input:focus {
+          outline: none;
+          border-bottom-color: #5aca0e; }
+    .block .block-content .error-label {
+      color: red;
+      font-size: 14px;
+      text-align: center;
+      width: 75%;
+      margin: 10px auto; }
+    .block .block-content .block-title,
+    .block .block-content .block-time,
+    .block .block-content .block-contact {
+      text-align: center; }
+    .block .block-content .focus-button {
+      text-align: center; }
+      .block .block-content .focus-button button {
+        height: 50px;
+        width: 265px;
+        font-size: 20px;
+        border: 2px solid #5aca0e;
+        border-radius: 5px;
+        cursor: pointer; }
+        .block .block-content .focus-button button:hover {
+          background-color: #5aca0e;
+          color: #fff;
+          opacity: 0.7; }
+    .block .block-content .edit {
+      position: relative;
+      text-align: right;
+      top: 50px; }
 
 .transition {
   transform: translateX(calc(50% - 280px));
