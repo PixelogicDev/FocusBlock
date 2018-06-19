@@ -18,7 +18,8 @@ class TimeBlock extends Component {
 		timerRef: null,
 		currentProgress: '',
 		isEdit: false,
-		inputErrors: { contact: 'valid' }
+		inputErrors: { contact: 'valid' },
+		triggers: {}
 		// didFinishTransition: false
 	};
 
@@ -41,7 +42,8 @@ class TimeBlock extends Component {
 			timerRef: null,
 			currentProgress: 'start',
 			isEdit: false,
-			inputErrors: { contact: 'valid' }
+			inputErrors: { contact: 'valid' },
+			triggers: this.props.triggers
 			// didFinishTransition: false
 		};
 	}
@@ -219,7 +221,11 @@ class TimeBlock extends Component {
 		return (
 			<Fragment>
 				{this.state.isEdit ? (
-					<BlockForm isEdit="true" focusBlock={this.state} />
+					<BlockForm
+						triggers={this.state.triggers}
+						isEdit="true"
+						focusBlock={this.state}
+					/>
 				) : (
 					<div id={this.state.id} className={classes}>
 						<div className="block-content">

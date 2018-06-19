@@ -72,6 +72,30 @@ class Dashboard extends Component {
 			});
 	};
 
+	updateBlock = focusBlock => {
+		// Search for FocusBlock by ID //
+		let blockIndex = this.state.user.focusBlocks
+			.map(block => {
+				return block.id;
+			})
+			.indexOf(focusBlock.id);
+
+		console.log(focusBlock);
+
+		// Replace Block with updated one //
+		let blocksCopy = this.state.user.focusBlocks;
+		blocksCopy[blockIndex] = focusBlock;
+
+		// Set state //
+		this.setState({
+			user: {
+				focusBlocks: blocksCopy
+			}
+		});
+
+		// Update db //
+	};
+
 	blockCloner = blocks => {
 		let cloneArray = [];
 
@@ -97,15 +121,20 @@ class Dashboard extends Component {
 	};
 
 	render() {
+		let triggerObj = {
+			create: this.createBlock,
+			update: this.updateBlock
+		};
+
 		return (
 			<Fragment>
 				<h2>Don’t get stuck on a task! Create a FocusBlock now.</h2>
 				{this.state.user.focusBlocks.length === 0 ? (
-					<BlockForm trigger={this.createBlock} />
+					<BlockForm triggers={triggerObj} />
 				) : (
 					<div className="blocks">
 						{this.state.user.focusBlocks.map((block, i) => (
-							<TimeBlock block={block} key={i} />
+							<TimeBlock triggers={triggerObj} block={block} key={i} />
 						))}
 					</div>
 				)}

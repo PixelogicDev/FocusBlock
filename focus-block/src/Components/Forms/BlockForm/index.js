@@ -14,24 +14,34 @@ class BlockForm extends Component {
 	}
 
 	state = {
-		title: '',
-		timer: '15',
-		customTimer: '15',
-		contact: '',
+		focusBlock: {
+			id: '',
+			title: '',
+			timer: 0,
+			customTimer: 0,
+			friendlyTimer: '',
+			contact: '',
+			contactShown: false,
+			blockStarted: false,
+			timerRef: null,
+			currentProgress: '',
+			isEdit: false,
+			inputErrors: { contact: 'valid' },
+			triggers: {}
+		},
 		formErrors: { title: '', timer: 'valid', contact: '' },
 		formValid: false
 	};
 
 	componentDidMount() {
 		if (this.props.isEdit) {
-			// TODO: Finish up edit form //
 			this.setState({
-				title: this.props.focusBlock.title,
-				timer: this.props.focusBlock.timer,
-				customTimer: this.props.focusBlock.custom,
-				contact: this.props.focusBlock.contact,
-				formErrors: { title: '', timer: 'valid', contact: '' },
-				formValid: false
+				focusBlock: {
+					//-- MAD PROPS kipvanderzee --//
+					...this.props.focusBlock
+				},
+				formErrors: { title: 'valid', timer: 'valid', contact: 'valid' },
+				formValid: true
 			});
 		} else {
 			// Setup view to create a new block //
@@ -40,29 +50,39 @@ class BlockForm extends Component {
 
 	handleChange = event => {
 		this.validateField(event);
+		let blockClone = { ...this.state.focusBlock };
+		blockClone[event.target.name] = event.target.value;
+
 		this.setState({
-			[event.target.name]: event.target.value
+			focusBlock: blockClone
 		});
 	};
 
-	createBlock = event => {
-		console.log('Creating block...');
-		this.props.trigger(this.state);
-		this.setState({
-			title: '',
-			timer: '15',
-			customTimer: '15',
-			contact: '',
-			formErrors: {
-				title: '',
-				timer: 'valid',
-				contact: ''
-			},
-			formValid: false
-		});
+	blockEvent = event => {
+		if (this.props.isEdit) {
+			console.log('Updating block...');
+			this.state.focusBlock.triggers.update(this.state.focusBlock);
+		} else {
+			console.log('Creating block...');
+			this.props.focusBlock.triggers.create(this.state.focusBlock);
 
-		// Set selector back to 15 min //
-		document.getElementById('timer').selectedIndex = 0;
+			// TODO: Change to new block model //
+			this.setState({
+				title: '',
+				timer: '15',
+				customTimer: '15',
+				contact: '',
+				formErrors: {
+					title: '',
+					timer: 'valid',
+					contact: ''
+				},
+				formValid: false
+			});
+
+			// Set selector back to 15 min //
+			document.getElementById('timer').selectedIndex = 0;
+		}
 
 		event.preventDefault();
 
@@ -117,7 +137,6 @@ class BlockForm extends Component {
 
 	formValid = (title, timer, contact) => {
 		let isFormValid = false;
-
 		if (title === 'valid' && timer === 'valid' && contact === 'valid') {
 			isFormValid = true;
 		}
@@ -134,13 +153,13 @@ class BlockForm extends Component {
 
 	render() {
 		return (
-			<form id="blockForm" onSubmit={this.createBlock}>
+			<form id="blockForm" onSubmit={this.blockEvent}>
 				<label>What are you focusing on?</label>
 				<input
 					name="title"
 					placeholder="Title"
 					type="text"
-					value={this.state.title}
+					value={this.state.focusBlock.title}
 					onChange={this.handleChange}
 				/>
 				{this.state.formErrors.title !== 'valid' ? (
@@ -156,12 +175,12 @@ class BlockForm extends Component {
 					<option value="60">1h</option>
 					<option value="custom">Custom</option>
 				</select>
-				{this.state.timer === 'custom' ? (
+				{this.state.focusBlock.timer === 'custom' ? (
 					<input
 						name="customTimer"
 						placeholder="Time in mins"
 						type="number"
-						value={this.state.customTimer}
+						value={this.state.focusBlock.customTimer}
 						onChange={this.handleChange}
 					/>
 				) : (
@@ -177,7 +196,7 @@ class BlockForm extends Component {
 					name="contact"
 					placeholder="Email"
 					type="text"
-					value={this.state.contact}
+					value={this.state.focusBlock.contact}
 					onChange={this.handleChange}
 				/>
 				{this.state.formErrors.contact !== 'valid' ? (
@@ -186,7 +205,7 @@ class BlockForm extends Component {
 					''
 				)}
 				<button disabled={!this.state.formValid} type="submit">
-					Create
+					{this.props.isEdit ? 'Update' : 'Create'}
 				</button>
 			</form>
 		);
