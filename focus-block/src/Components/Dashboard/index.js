@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import TimeBlock from '../TimeBlock/index';
-import BlockForm from '../Forms/BlockForm/index';
+import TimeBlock from '../FocusBlock/FocusBlock';
+import BlockForm from '../BlockForm/index';
 import ServiceContainer from '../../Containers/ServiceContainer';
 
 class Dashboard extends Component {
