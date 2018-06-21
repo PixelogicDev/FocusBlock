@@ -25,7 +25,7 @@ class BlockForm extends Component {
 			blockStarted: false,
 			timerRef: null,
 			currentProgress: '',
-			isEdit: false,
+			isEditing: false,
 			inputErrors: { contact: 'valid' },
 			triggers: {}
 		},
@@ -34,7 +34,7 @@ class BlockForm extends Component {
 	};
 
 	componentDidMount() {
-		if (this.props.isEdit) {
+		if (this.props.isEditing) {
 			this.setState({
 				focusBlock: {
 					//-- MAD PROPS kipvanderzee --//
@@ -65,12 +65,12 @@ class BlockForm extends Component {
 	};
 
 	blockEvent = event => {
-		if (this.props.isEdit) {
+		if (this.props.isEditing) {
 			console.log('Updating block...');
 			this.state.focusBlock.triggers.update(this.state.focusBlock);
 
 			let blockClone = this.state.focusBlock;
-			blockClone.isEdit = false;
+			blockClone.isEditing = false;
 			this.props.focusBlock.setState({
 				...blockClone
 			});
@@ -222,7 +222,7 @@ class BlockForm extends Component {
 					''
 				)}
 				<button disabled={!this.state.formValid} type="submit">
-					{this.props.isEdit ? 'Update' : 'Create'}
+					{this.props.isEditing ? 'Update' : 'Create'}
 				</button>
 			</form>
 		);

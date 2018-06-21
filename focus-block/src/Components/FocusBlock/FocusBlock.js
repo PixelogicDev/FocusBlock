@@ -22,7 +22,7 @@ class FocusBlock extends Component {
 			blockStarted: false,
 			timerRef: null,
 			currentProgress: 'start',
-			isEditinging: false,
+			isEditing: false,
 			inputErrors: { contact: 'valid' }
 		};
 	}
