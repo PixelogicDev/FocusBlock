@@ -80,8 +80,6 @@ class Dashboard extends Component {
 			})
 			.indexOf(focusBlock.id);
 
-		console.log(focusBlock);
-
 		// Replace Block with updated one //
 		let blocksCopy = this.state.user.focusBlocks;
 		blocksCopy[blockIndex] = focusBlock;
@@ -94,6 +92,14 @@ class Dashboard extends Component {
 		});
 
 		// Update db //
+		this.state.service
+			.updateUser(this.state.user._id, blocksCopy)
+			.then(result => {
+				console.log(result);
+			})
+			.catch(error => {
+				console.log(error);
+			});
 	};
 
 	blockCloner = blocks => {

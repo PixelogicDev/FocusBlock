@@ -221,11 +221,7 @@ class TimeBlock extends Component {
 		return (
 			<Fragment>
 				{this.state.isEdit ? (
-					<BlockForm
-						triggers={this.state.triggers}
-						isEdit="true"
-						focusBlock={this.state}
-					/>
+					<BlockForm isEdit="true" focusBlock={this} />
 				) : (
 					<div id={this.state.id} className={classes}>
 						<div className="block-content">

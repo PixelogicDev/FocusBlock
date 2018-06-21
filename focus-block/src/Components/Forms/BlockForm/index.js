@@ -17,8 +17,8 @@ class BlockForm extends Component {
 		focusBlock: {
 			id: '',
 			title: '',
-			timer: 0,
-			customTimer: 0,
+			timer: 15,
+			customTimer: 15,
 			friendlyTimer: '',
 			contact: '',
 			contactShown: false,
@@ -38,13 +38,19 @@ class BlockForm extends Component {
 			this.setState({
 				focusBlock: {
 					//-- MAD PROPS kipvanderzee --//
-					...this.props.focusBlock
+					...this.props.focusBlock.state
 				},
 				formErrors: { title: 'valid', timer: 'valid', contact: 'valid' },
 				formValid: true
 			});
+
+			// this.setTimeSelect(this.state.focusBlock.timer);
 		} else {
-			// Setup view to create a new block //
+			// Creates a new focusBlock //
+			let blockClone = this.state.focusBlock;
+			blockClone.id = this.uuid();
+			blockClone.triggers = this.props.triggers;
+			this.setState({ focusBlock: blockClone });
 		}
 	}
 
@@ -62,26 +68,15 @@ class BlockForm extends Component {
 		if (this.props.isEdit) {
 			console.log('Updating block...');
 			this.state.focusBlock.triggers.update(this.state.focusBlock);
+
+			let blockClone = this.state.focusBlock;
+			blockClone.isEdit = false;
+			this.props.focusBlock.setState({
+				...blockClone
+			});
 		} else {
 			console.log('Creating block...');
-			this.props.focusBlock.triggers.create(this.state.focusBlock);
-
-			// TODO: Change to new block model //
-			this.setState({
-				title: '',
-				timer: '15',
-				customTimer: '15',
-				contact: '',
-				formErrors: {
-					title: '',
-					timer: 'valid',
-					contact: ''
-				},
-				formValid: false
-			});
-
-			// Set selector back to 15 min //
-			document.getElementById('timer').selectedIndex = 0;
+			this.state.focusBlock.triggers.create(this.state.focusBlock);
 		}
 
 		event.preventDefault();
@@ -99,7 +94,7 @@ class BlockForm extends Component {
 			transition: 'all 2s'
 		}); */
 	};
-
+	//-- Helpers --//
 	validateField = event => {
 		let titleValid = this.state.formErrors.title;
 		let timerValid = this.state.formErrors.timer;
@@ -151,6 +146,23 @@ class BlockForm extends Component {
 		});
 	};
 
+	// TODO: Fix this up with refs, the proper way //
+	/* setTimeSelect = currentTimeVal => {
+		// Create array of options to loop through //
+		let selectOptions = document.getElementById('timer').options;
+
+		console.log(selectOptions);
+
+		// Check for the value in the array //
+		for (let i in selectOptions) {
+			if (currentTimeVal === parseInt(selectOptions[i].value, 10)) {
+				console.log(selectOptions[i].value);
+			}
+		}
+
+		// If not in the array, set to custom //
+	}; */
+
 	render() {
 		return (
 			<form id="blockForm" onSubmit={this.blockEvent}>
@@ -168,7 +180,12 @@ class BlockForm extends Component {
 					''
 				)}
 				<label>How long do you need to focus?</label>
-				<select id="timer" name="timer" onChange={this.handleChange}>
+				<select
+					id="timer"
+					name="timer"
+					// ref={ref => (this.timerNode = ref)}
+					onChange={this.handleChange}
+				>
 					<option value="15">15m</option>
 					<option value="30">30m</option>
 					<option value="45">45m</option>
