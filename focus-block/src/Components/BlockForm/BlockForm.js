@@ -2,6 +2,33 @@ import React, { Component } from 'react';
 import './styles.css';
 
 class BlockForm extends Component {
+	constructor(props) {
+		super(props);
+
+		let currentState;
+		if (this.props.isEditing) {
+			currentState = {
+				title: props.focusBlock.state.title,
+				timer: props.focusBlock.state.timer,
+				contact: props.focusBlock.state.contact,
+				formErrors: { title: 'valid', timer: 'valid', contact: 'valid' },
+				formValid: true
+			};
+			// this.setTimeSelect(this.state.focusBlock.timer);
+		} else {
+			// Creates a new focusBlock //
+			currentState = {
+				title: '',
+				timer: '',
+				contact: '',
+				formErrors: { title: '', timer: 'valid', contact: '' },
+				formValid: false
+			};
+		}
+
+		this.state = currentState;
+	}
+
 	//-- Helpers --//
 	// MAD PROPS: https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript#answer-2117523 //
 	uuid() {
@@ -13,86 +40,73 @@ class BlockForm extends Component {
 		);
 	}
 
-	state = {
-		focusBlock: {
-			id: '',
-			title: '',
-			timer: 15,
-			customTimer: 15,
-			friendlyTimer: '',
-			contact: '',
-			contactShown: false,
-			blockStarted: false,
-			timerRef: null,
-			currentProgress: '',
-			isEditing: false,
-			inputErrors: { contact: 'valid' },
-			triggers: {}
-		},
-		formErrors: { title: '', timer: 'valid', contact: '' },
-		formValid: false
-	};
-
-	componentDidMount() {
-		if (this.props.isEditing) {
-			this.setState({
-				focusBlock: {
-					//-- MAD PROPS kipvanderzee --//
-					...this.props.focusBlock.state
-				},
-				formErrors: { title: 'valid', timer: 'valid', contact: 'valid' },
-				formValid: true
-			});
-
-			// this.setTimeSelect(this.state.focusBlock.timer);
-		} else {
-			// Creates a new focusBlock //
-			let blockClone = this.state.focusBlock;
-			blockClone.id = this.uuid();
-			blockClone.triggers = this.props.triggers;
-			this.setState({ focusBlock: blockClone });
-		}
-	}
-
 	handleChange = event => {
 		this.validateField(event);
-		let blockClone = { ...this.state.focusBlock };
-		blockClone[event.target.name] = event.target.value;
-
 		this.setState({
-			focusBlock: blockClone
+			[event.target.name]: event.target.value
 		});
+	};
+
+	getFriendlyTime = () => {
+		let friendlyTimer = '';
+		let timerVal;
+
+		if (this.state.timer === 'custom') {
+			timerVal = this.state.customTimer;
+		} else {
+			timerVal = this.state.timer;
+		}
+
+		if (timerVal < 60) {
+			friendlyTimer = `${timerVal}m`;
+		} else {
+			friendlyTimer = `${timerVal / 60}h`;
+		}
+
+		return friendlyTimer;
+	};
+
+	initFocusBlock = () => {
+		// Create initial FocusBlock data object //
+		return {
+			id: this.uuid(),
+			title: this.state.title,
+			timer: this.state.timer,
+			customTimer: 15,
+			friendlyTimer: this.getFriendlyTime(),
+			contact: this.state.contact,
+			contactVisible: false,
+			blockStarted: false,
+			timerRef: null,
+			currentProgress: 'start',
+			isEditing: false,
+			inputErrors: { contact: 'valid' },
+			dashboardEvents: this.props.triggers
+		};
 	};
 
 	blockEvent = event => {
 		if (this.props.isEditing) {
 			console.log('Updating block...');
-			this.state.focusBlock.triggers.update(this.state.focusBlock);
+			let focusBlock = this.props.focusBlock;
+			let updatedState = {
+				title: this.state.title,
+				timer: this.state.timer,
+				contact: this.state.contact,
+				isEditing: false
+			};
 
-			let blockClone = this.state.focusBlock;
-			blockClone.isEditing = false;
-			this.props.focusBlock.setState({
-				...blockClone
+			//-- MAD PROPS Empty_place --//
+			focusBlock.setState({ ...updatedState }, () => {
+				focusBlock.state.dashboardEvents.update(focusBlock.state);
 			});
 		} else {
 			console.log('Creating block...');
-			this.state.focusBlock.triggers.create(this.state.focusBlock);
+			// Access dashboard component & send block //
+			this.props.triggers.create(this.initFocusBlock());
 		}
 
 		event.preventDefault();
-
-		/* let form = document.getElementById('blockForm');
-
-		// Add event listener //
-		form.addEventListener('transitionend', event => {
-			form.style.display = 'none';
-		});
-
-		// Set transition //
-		Object.assign(form.style, {
-			transform: 'translateX(-150%)',
-			transition: 'all 2s'
-		}); */
 	};
 	//-- Helpers --//
 	validateField = event => {
@@ -119,9 +133,10 @@ class BlockForm extends Component {
 					/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
 				);
 
-				contactValid = validContact
-					? 'valid'
-					: 'This is not an email, please try again.';
+				contactValid =
+					validContact || event.target.value === ''
+						? 'valid'
+						: 'This is not an email, please try again.';
 				break;
 			default:
 				break;
@@ -171,7 +186,7 @@ class BlockForm extends Component {
 					name="title"
 					placeholder="Title"
 					type="text"
-					value={this.state.focusBlock.title}
+					value={this.state.title}
 					onChange={this.handleChange}
 				/>
 				{this.state.formErrors.title !== 'valid' ? (
@@ -192,12 +207,12 @@ class BlockForm extends Component {
 					<option value="60">1h</option>
 					<option value="custom">Custom</option>
 				</select>
-				{this.state.focusBlock.timer === 'custom' ? (
+				{this.state.timer === 'custom' ? (
 					<input
 						name="customTimer"
 						placeholder="Time in mins"
 						type="number"
-						value={this.state.focusBlock.customTimer}
+						value={this.state.customTimer}
 						onChange={this.handleChange}
 					/>
 				) : (
@@ -213,7 +228,7 @@ class BlockForm extends Component {
 					name="contact"
 					placeholder="Email"
 					type="text"
-					value={this.state.focusBlock.contact}
+					value={this.state.contact}
 					onChange={this.handleChange}
 				/>
 				{this.state.formErrors.contact !== 'valid' ? (

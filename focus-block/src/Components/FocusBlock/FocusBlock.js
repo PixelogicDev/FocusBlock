@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import BlockForm from '../BlockForm/index';
+import BlockForm from '../BlockForm/BlockForm';
 import Email from '../../Containers/SmtpContainer';
 import './styles.css';
 
@@ -23,7 +23,8 @@ class FocusBlock extends Component {
 			timerRef: null,
 			currentProgress: 'start',
 			isEditing: false,
-			inputErrors: { contact: 'valid' }
+			inputErrors: { contact: 'valid' },
+			dashboardEvents: props.events
 		};
 	}
 
@@ -154,10 +155,10 @@ class FocusBlock extends Component {
 		let targetVal = event.target.value;
 		let validContact = targetVal.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
 
-		if (validContact) {
+		if (validContact || event.target.value === '') {
 			this.setState({
 				contact: targetVal,
-				contactVisible: true,
+				contactVisible: event.target.value === '' ? false : true,
 				inputErrors: { contact: 'valid' }
 			});
 		} else {

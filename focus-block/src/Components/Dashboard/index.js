@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import TimeBlock from '../FocusBlock/FocusBlock';
-import BlockForm from '../BlockForm/index';
+import FocusBlock from '../FocusBlock/FocusBlock';
+import BlockForm from '../BlockForm/BlockForm';
 import ServiceContainer from '../../Containers/ServiceContainer';
 
 class Dashboard extends Component {
@@ -59,11 +59,12 @@ class Dashboard extends Component {
 		currentBlocks.push(focusBlock);
 		this.setState({ focusBlocks: currentBlocks });
 
-		// Get clone of blocks and push to db //
-		let cloneBlocks = this.blockCloner(currentBlocks);
+		// Remove contact to not store in DB //
+		let clonedBlocks = this.blockCloner(currentBlocks);
 
+		// Update DB //
 		this.state.service
-			.updateUser(this.state.user._id, cloneBlocks)
+			.updateUser(this.state.user._id, clonedBlocks)
 			.then(result => {
 				console.log(result);
 			})
@@ -91,7 +92,7 @@ class Dashboard extends Component {
 			}
 		});
 
-		// Update db //
+		// Update db
 		this.state.service
 			.updateUser(this.state.user._id, blocksCopy)
 			.then(result => {
@@ -107,19 +108,11 @@ class Dashboard extends Component {
 
 		blocks.forEach(block => {
 			let cloneBlock = {
-				id: block.id,
-				title: block.title,
-				timer: block.timer,
-				customTimer: block.customTimer,
-				friendlyTimer: block.friendlyTimer,
-				contact: '',
-				contactShown: block.contactShown,
-				blockStarted: block.blockStarted,
-				timerRef: block.timerRef,
-				currentProgress: block.currentProgress,
-				isEdit: block.isEdit
+				...block
 			};
 
+			// Remove contact //
+			cloneBlock.contact = '';
 			cloneArray.push(cloneBlock);
 		});
 
@@ -140,7 +133,7 @@ class Dashboard extends Component {
 				) : (
 					<div className="blocks">
 						{this.state.user.focusBlocks.map((block, i) => (
-							<TimeBlock triggers={triggerObj} block={block} key={i} />
+							<FocusBlock events={triggerObj} block={block} key={i} />
 						))}
 					</div>
 				)}
