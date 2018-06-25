@@ -7,8 +7,9 @@ class FocusBlock extends Component {
 	constructor(props) {
 		super(props);
 
+		// New or updating //
 		this.state = {
-			id: this.uuid(),
+			id: props.block.id === '' ? this.uuid() : props.block.id,
 			title: props.block.title,
 			timer: props.block.timer,
 			// MAD PROPS DigitalData (found the un-findable bug) //
