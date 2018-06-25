@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import Dashboard from './Components/Dashboard/index';
+import Dashboard from './Components/Dashboard/Dashboard';
 
 // Styles //
 import './App.css';

@@ -14,37 +14,25 @@ class Dashboard extends Component {
 		service: new ServiceContainer()
 	};
 
-	getUserId = path => {
-		// Split path and check for id //
-		let idSplit = path.split('/');
-		if (idSplit[1] !== '') {
-			return idSplit[1];
-		} else {
-			return null;
-		}
-	};
-
 	componentDidMount() {
 		// Check for user //
 		let userId = this.getUserId(window.location.pathname);
 		if (userId) {
-			console.log('Found user');
 			this.state.service
 				.getUser(userId)
 				.then(result => {
 					this.setState({ user: result });
-					console.log('User received.');
+					console.log('User dashboard set.');
 				})
 				.catch(error => {
 					console.log(error);
 				});
 		} else {
-			console.log('Creating user...');
 			this.state.service
 				.createUser()
 				.then(result => {
 					this.setState({ user: result });
-					console.log('User created.');
+					console.log('User created & dashboard set.');
 				})
 				.catch(error => {
 					console.log(error);
@@ -53,8 +41,13 @@ class Dashboard extends Component {
 	}
 
 	//-- Helpers --//
+	getUserId = path => {
+		// Split path and check for id //
+		let idSplit = path.split('/');
+		return idSplit[1] !== '' ? idSplit[1] : null;
+	};
+
 	createBlock = focusBlock => {
-		// Get current array //
 		let currentBlocks = this.state.user.focusBlocks;
 		currentBlocks.push(focusBlock);
 		this.setState({ focusBlocks: currentBlocks });
