@@ -68,32 +68,73 @@ class Dashboard extends Component {
 
 	updateBlock = focusBlock => {
 		// Search for FocusBlock by ID //
-		let blockIndex = this.state.user.focusBlocks
+		let index = this.findBlockIndex(focusBlock.id);
+
+		if (index !== -1) {
+			// Replace Block with updated one //
+			let blocksCopy = this.state.user.focusBlocks;
+			blocksCopy[index] = focusBlock;
+
+			// Set state //
+			this.setState({
+				user: {
+					focusBlocks: blocksCopy
+				}
+			});
+
+			// Update db //
+			this.state.service
+				.updateUser(this.state.user._id, blocksCopy)
+				.then(result => {
+					console.log(result);
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		} else {
+			console.log('FocusBlock not found.');
+		}
+	};
+
+	deleteBlock = id => {
+		// Pop alert to confirm delete //
+		// window.confirm;
+
+		// Find index of block //
+		let index = this.findBlockIndex(id);
+
+		if (index !== -1) {
+			// Trigger update //
+			let blocksCopy = this.state.user.focusBlocks;
+			blocksCopy.splice(index, 1);
+
+			// Set state //
+			this.setState({
+				user: {
+					focusBlocks: blocksCopy
+				}
+			});
+
+			// Update db //
+			this.state.service
+				.updateUser(this.state.user._id, blocksCopy)
+				.then(result => {
+					console.log(result);
+				})
+				.catch(error => {
+					console.log(error);
+				});
+		} else {
+			console.log('FocusBlock not found.');
+		}
+	};
+
+	findBlockIndex = id => {
+		return this.state.user.focusBlocks
 			.map(block => {
 				return block.id;
 			})
-			.indexOf(focusBlock.id);
-
-		// Replace Block with updated one //
-		let blocksCopy = this.state.user.focusBlocks;
-		blocksCopy[blockIndex] = focusBlock;
-
-		// Set state //
-		this.setState({
-			user: {
-				focusBlocks: blocksCopy
-			}
-		});
-
-		// Update db
-		this.state.service
-			.updateUser(this.state.user._id, blocksCopy)
-			.then(result => {
-				console.log(result);
-			})
-			.catch(error => {
-				console.log(error);
-			});
+			.indexOf(id);
 	};
 
 	blockCloner = blocks => {
@@ -115,7 +156,8 @@ class Dashboard extends Component {
 	render() {
 		let triggerObj = {
 			create: this.createBlock,
-			update: this.updateBlock
+			update: this.updateBlock,
+			delete: this.deleteBlock
 		};
 
 		return (

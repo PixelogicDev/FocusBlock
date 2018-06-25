@@ -179,6 +179,11 @@ class FocusBlock extends Component {
 		this.setState({ isEditing: !this.state.isEditing });
 	};
 
+	delete = () => {
+		// Trigger update on dashboard by passing comp ID //
+		this.state.dashboardEvents.delete(this.state.id);
+	};
+
 	render() {
 		let classNames = require('classnames');
 		let classes = classNames('block', {
@@ -238,6 +243,9 @@ class FocusBlock extends Component {
 							</div>
 							<div className="edit">
 								<button onClick={this.toggleEdit}>EDIT</button>
+							</div>
+							<div className="delete">
+								<button onClick={this.delete}>DELETE</button>
 							</div>
 						</div>
 					</div>
