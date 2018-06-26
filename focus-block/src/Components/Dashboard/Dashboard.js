@@ -97,33 +97,39 @@ class Dashboard extends Component {
 	};
 
 	deleteBlock = id => {
-		// Pop alert to confirm delete //
-		// window.confirm;
-
 		// Find index of block //
 		let index = this.findBlockIndex(id);
 
 		if (index !== -1) {
-			// Trigger update //
-			let blocksCopy = this.state.user.focusBlocks;
-			blocksCopy.splice(index, 1);
+			// Pop alert to confirm delete //
+			let willDelete = window.confirm(
+				`This action will delete "${
+					this.state.focusBlocks[index].title
+				}". Continue?`
+			);
 
-			// Set state //
-			this.setState({
-				user: {
-					focusBlocks: blocksCopy
-				}
-			});
+			if (willDelete) {
+				// Trigger update //
+				let blocksCopy = this.state.user.focusBlocks;
+				blocksCopy.splice(index, 1);
 
-			// Update db //
-			this.state.service
-				.updateUser(this.state.user._id, blocksCopy)
-				.then(result => {
-					console.log(result);
-				})
-				.catch(error => {
-					console.log(error);
+				// Set state //
+				this.setState({
+					user: {
+						focusBlocks: blocksCopy
+					}
 				});
+
+				// Update db //
+				this.state.service
+					.updateUser(this.state.user._id, blocksCopy)
+					.then(result => {
+						console.log(result);
+					})
+					.catch(error => {
+						console.log(error);
+					});
+			}
 		} else {
 			console.log('FocusBlock not found.');
 		}
