@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import FocusBlock from '../FocusBlock/FocusBlock';
 import BlockForm from '../BlockForm/BlockForm';
+import AddBlockButton from './AddBlockButton/AddBlockButton';
 import ServiceContainer from '../../Containers/ServiceContainer';
+import './styles.css';
 
 class Dashboard extends Component {
 	state = {
@@ -11,6 +13,7 @@ class Dashboard extends Component {
 			url: '',
 			focusBlocks: []
 		},
+		isAdding: false,
 		service: new ServiceContainer()
 	};
 
@@ -50,7 +53,10 @@ class Dashboard extends Component {
 	createBlock = focusBlock => {
 		let currentBlocks = this.state.user.focusBlocks;
 		currentBlocks.push(focusBlock);
-		this.setState({ focusBlocks: currentBlocks });
+		this.setState({
+			focusBlocks: currentBlocks,
+			isAdding: false
+		});
 
 		// Remove contact to not store in DB //
 		let clonedBlocks = this.blockCloner(currentBlocks);
@@ -104,7 +110,7 @@ class Dashboard extends Component {
 			// Pop alert to confirm delete //
 			let willDelete = window.confirm(
 				`This action will delete "${
-					this.state.focusBlocks[index].title
+					this.state.user.focusBlocks[index].title
 				}". Continue?`
 			);
 
@@ -159,6 +165,16 @@ class Dashboard extends Component {
 		return cloneArray;
 	};
 
+	addNewBlock = () => {
+		this.setState({
+			isAdding: true
+		});
+	};
+
+	showBlockForm = () => {
+		return this.state.user.focusBlocks.length === 0 || this.state.isAdding;
+	};
+
 	render() {
 		let triggerObj = {
 			create: this.createBlock,
@@ -169,7 +185,7 @@ class Dashboard extends Component {
 		return (
 			<Fragment>
 				<h2>Don’t get stuck on a task! Create a FocusBlock now.</h2>
-				{this.state.user.focusBlocks.length === 0 ? (
+				{this.showBlockForm() ? (
 					<BlockForm triggers={triggerObj} />
 				) : (
 					<div className="blocks">
@@ -186,6 +202,7 @@ class Dashboard extends Component {
 						</a>
 					</h3>
 				</div>
+				<AddBlockButton addBlockTrigger={this.addNewBlock} />
 			</Fragment>
 		);
 	}
