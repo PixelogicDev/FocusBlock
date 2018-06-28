@@ -12,11 +12,13 @@
     justify-content: center; }
     .block .block-content .block-title {
       font-size: 60px;
+      font-weight: 300;
       margin-bottom: 25px; }
     .block .block-content .block-time {
       font-size: 80px; }
     .block .block-content .block-contact {
       font-size: 38px;
+      font-weight: 300;
       margin-bottom: 50px;
       cursor: pointer; }
       .block .block-content .block-contact .contact-input {
@@ -45,6 +47,7 @@
         height: 50px;
         width: 265px;
         font-size: 20px;
+        font-weight: 700;
         border: 2px solid #5aca0e;
         border-radius: 5px;
         cursor: pointer; }

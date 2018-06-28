@@ -1,5 +1,8 @@
 .container {
   margin: 15px; }
+  .container .custom-url {
+    font-weight: 500;
+    font-size: 18px; }
   .container .blocks {
     display: flex;
     flex-wrap: wrap; }
