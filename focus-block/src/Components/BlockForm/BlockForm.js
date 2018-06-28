@@ -236,9 +236,37 @@ class BlockForm extends Component {
 				) : (
 					''
 				)}
-				<button disabled={!this.state.formValid} type="submit">
-					{this.props.isEditing ? 'Update' : 'Create'}
-				</button>
+
+				{this.props.isEditing ? (
+					<div className="action-buttons">
+						<button
+							className="action-delete"
+							onClick={() => this.props.focusBlock.delete()}
+						>
+							<img
+								src={require('../../Assets/delete-trash@2x.png')}
+								alt="Delete focus block trash can button"
+							/>
+						</button>
+						<button
+							className="action-cancel"
+							onClick={() =>
+								this.props.focusBlock.setState({
+									isEditing: false
+								})
+							}
+						>
+							Cancel
+						</button>
+						<button disabled={!this.state.formValid} type="submit">
+							Update
+						</button>
+					</div>
+				) : (
+					<button disabled={!this.state.formValid} type="submit">
+						Create
+					</button>
+				)}
 			</form>
 		);
 	}

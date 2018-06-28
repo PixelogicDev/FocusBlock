@@ -103,9 +103,13 @@ $end-color: #fb9595;
 		}
 
 		.edit {
-			position: relative;
-			text-align: right;
-			top: 50px;
+			width: 35px;
+			height: 35px;
+			padding: 10px;
+			position: absolute;
+			cursor: pointer;
+			bottom: 0;
+			right: 0;
 		}
 	}
 }

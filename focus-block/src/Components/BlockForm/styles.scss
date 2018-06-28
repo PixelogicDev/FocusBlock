@@ -47,6 +47,40 @@ form {
 		}
 	}
 
+	.action-buttons {
+		button {
+			&.action-delete {
+				width: 5%;
+				vertical-align: top;
+				border-color: #fb9595;
+				img {
+					width: 20px;
+					height: 25px;
+				}
+				&:hover {
+					background-color: #fb9595;
+				}
+			}
+
+			&.action-delete,
+			&.action-cancel {
+				margin-right: 3%;
+			}
+
+			&.action-cancel {
+				border-color: #979797;
+				&:hover {
+					background-color: #979797;
+				}
+			}
+
+			&.action-cancel,
+			&:nth-child(3) {
+				width: 30%;
+			}
+		}
+	}
+
 	button {
 		margin: 0 auto;
 		width: 50%;

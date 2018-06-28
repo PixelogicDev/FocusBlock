@@ -5,6 +5,7 @@ class AddBlockButton extends Component {
 	render() {
 		return (
 			<img
+				className="action-add"
 				onClick={this.props.addBlockTrigger}
 				//-- MAD PROPS Tendencydriven --//
 				src={require('../../../Assets/cmjio-button@2x.png')}

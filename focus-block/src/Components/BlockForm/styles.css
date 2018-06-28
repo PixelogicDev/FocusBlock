@@ -33,6 +33,23 @@ form {
     font-size: 16px; }
     form select:focus {
       outline: none; }
+  form .action-buttons button.action-delete {
+    width: 5%;
+    vertical-align: top;
+    border-color: #fb9595; }
+    form .action-buttons button.action-delete img {
+      width: 20px;
+      height: 25px; }
+    form .action-buttons button.action-delete:hover {
+      background-color: #fb9595; }
+  form .action-buttons button.action-delete, form .action-buttons button.action-cancel {
+    margin-right: 3%; }
+  form .action-buttons button.action-cancel {
+    border-color: #979797; }
+    form .action-buttons button.action-cancel:hover {
+      background-color: #979797; }
+  form .action-buttons button.action-cancel, form .action-buttons button:nth-child(3) {
+    width: 30%; }
   form button {
     margin: 0 auto;
     width: 50%;

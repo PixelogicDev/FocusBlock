@@ -241,12 +241,16 @@ class FocusBlock extends Component {
 									)}
 								</button>
 							</div>
-							<div className="edit">
-								<button onClick={this.toggleEdit}>EDIT</button>
-							</div>
-							<div className="delete">
+							<img
+								className="edit"
+								onClick={this.toggleEdit}
+								//-- MAD PROPS Tendencydriven --//
+								src={require('../../Assets/edit-pencil@2x.png')}
+								alt="Edit focus block pencil button"
+							/>
+							{/* <div className="delete">
 								<button onClick={this.delete}>DELETE</button>
-							</div>
+							</div> */}
 						</div>
 					</div>
 				)}
