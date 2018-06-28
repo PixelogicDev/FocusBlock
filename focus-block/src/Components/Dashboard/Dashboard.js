@@ -184,23 +184,22 @@ class Dashboard extends Component {
 
 		return (
 			<Fragment>
-				<h2>Don’t get stuck on a task! Create a FocusBlock now.</h2>
-				{this.showBlockForm() ? (
-					<BlockForm triggers={triggerObj} />
-				) : (
-					<div className="blocks">
-						{this.state.user.focusBlocks.map((block, i) => (
-							<FocusBlock events={triggerObj} block={block} key={i} />
-						))}
-					</div>
-				)}
-				<div className="custom-url">
-					<h3>
+				<div className="container">
+					<div className="custom-url">
 						Use this URL to come back to your saved FocusBlocks:{' '}
 						<a target="_blank" href={this.state.user.url}>
 							{this.state.user.url}
 						</a>
-					</h3>
+					</div>
+					{this.showBlockForm() ? (
+						<BlockForm triggers={triggerObj} />
+					) : (
+						<div className="blocks">
+							{this.state.user.focusBlocks.map((block, i) => (
+								<FocusBlock events={triggerObj} block={block} key={i} />
+							))}
+						</div>
+					)}
 				</div>
 				<AddBlockButton addBlockTrigger={this.addNewBlock} />
 			</Fragment>

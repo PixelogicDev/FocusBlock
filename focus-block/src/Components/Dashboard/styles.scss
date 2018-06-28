@@ -1,4 +1,7 @@
-.blocks {
-	display: flex;
-	justify-content: space-evenly;
+.container {
+	margin: 15px;
+	.blocks {
+		display: flex;
+		flex-wrap: wrap;
+	}
 }
