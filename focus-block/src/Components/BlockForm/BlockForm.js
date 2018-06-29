@@ -10,6 +10,7 @@ class BlockForm extends Component {
 			currentState = {
 				title: props.focusBlock.state.title,
 				timer: props.focusBlock.state.timer,
+				customTimer: props.focusBlock.state.customTimer,
 				contact: props.focusBlock.state.contact,
 				formErrors: { title: 'valid', timer: 'valid', contact: 'valid' },
 				formValid: true
@@ -20,6 +21,7 @@ class BlockForm extends Component {
 			currentState = {
 				title: '',
 				timer: '',
+				customTimer: 15,
 				contact: '',
 				formErrors: { title: '', timer: 'valid', contact: '' },
 				formValid: false
@@ -92,6 +94,8 @@ class BlockForm extends Component {
 			let updatedState = {
 				title: this.state.title,
 				timer: this.state.timer,
+				customTimer: this.state.customTimer,
+				friendlyTimer: this.getFriendlyTime(),
 				contact: this.state.contact,
 				isEditing: false
 			};
@@ -198,7 +202,7 @@ class BlockForm extends Component {
 				<select
 					id="timer"
 					name="timer"
-					// ref={ref => (this.timerNode = ref)}
+					value={this.state.timer}
 					onChange={this.handleChange}
 				>
 					<option value="15">15m</option>

@@ -248,9 +248,6 @@ class FocusBlock extends Component {
 								src={require('../../Assets/edit-pencil@2x.png')}
 								alt="Edit focus block pencil button"
 							/>
-							{/* <div className="delete">
-								<button onClick={this.delete}>DELETE</button>
-							</div> */}
 						</div>
 					</div>
 				)}
