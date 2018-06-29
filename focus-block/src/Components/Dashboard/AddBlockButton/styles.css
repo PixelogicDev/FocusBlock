@@ -2,7 +2,7 @@
   width: 60px;
   height: 60px;
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 0;
   padding: 15px; }
