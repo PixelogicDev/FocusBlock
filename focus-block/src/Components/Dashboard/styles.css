@@ -2,7 +2,8 @@
   margin: 15px; }
   .container .custom-url {
     font-weight: 500;
-    font-size: 18px; }
+    font-size: 18px;
+    padding-bottom: 30px; }
   .container .blocks {
     display: flex;
     flex-wrap: wrap; }
