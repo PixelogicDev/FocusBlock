@@ -6,16 +6,19 @@ import ServiceContainer from '../../Containers/ServiceContainer';
 import './styles.css';
 
 class Dashboard extends Component {
-	state = {
-		user: {
-			_id: '',
-			name: '',
-			url: '',
-			focusBlocks: []
-		},
-		isAdding: false,
-		service: new ServiceContainer()
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			user: {
+				_id: '',
+				name: '',
+				url: '',
+				focusBlocks: []
+			},
+			isAdding: false,
+			service: new ServiceContainer()
+		};
+	}
 
 	componentDidMount() {
 		// Check for user //
@@ -44,17 +47,13 @@ class Dashboard extends Component {
 	}
 
 	//-- Helpers --//
-	getUserId = path => {
-		// Split path and check for id //
-		let idSplit = path.split('/');
-		return idSplit[1] !== '' ? idSplit[1] : null;
-	};
-
 	createBlock = focusBlock => {
+		// Get current blocks in state //
 		let currentBlocks = this.state.user.focusBlocks;
 		currentBlocks.push(focusBlock);
+
 		this.setState({
-			focusBlocks: currentBlocks,
+			user: this.updateUserBlocks(currentBlocks),
 			isAdding: false
 		});
 
@@ -83,14 +82,15 @@ class Dashboard extends Component {
 
 			// Set state //
 			this.setState({
-				user: {
-					focusBlocks: blocksCopy
-				}
+				user: this.updateUserBlocks(blocksCopy)
 			});
+
+			// Clone block to remove email //
+			let clonedBlocks = this.blockCloner(blocksCopy);
 
 			// Update db //
 			this.state.service
-				.updateUser(this.state.user._id, blocksCopy)
+				.updateUser(this.state.user._id, clonedBlocks)
 				.then(result => {
 					console.log(result);
 				})
@@ -121,14 +121,15 @@ class Dashboard extends Component {
 
 				// Set state //
 				this.setState({
-					user: {
-						focusBlocks: blocksCopy
-					}
+					user: this.updateUserBlocks(blocksCopy)
 				});
+
+				// Clone block to remove email //
+				let clonedBlocks = this.blockCloner(blocksCopy);
 
 				// Update db //
 				this.state.service
-					.updateUser(this.state.user._id, blocksCopy)
+					.updateUser(this.state.user._id, clonedBlocks)
 					.then(result => {
 						console.log(result);
 					})
@@ -141,12 +142,25 @@ class Dashboard extends Component {
 		}
 	};
 
+	getUserId = path => {
+		// Split path and check for id //
+		let idSplit = path.split('/');
+		return idSplit[1] !== '' ? idSplit[1] : null;
+	};
+
 	findBlockIndex = id => {
 		return this.state.user.focusBlocks
 			.map(block => {
 				return block.id;
 			})
 			.indexOf(id);
+	};
+
+	updateUserBlocks = newBlocks => {
+		// Get current user state //
+		let currentUser = { ...this.state.user };
+		currentUser.focusBlocks = newBlocks;
+		return currentUser;
 	};
 
 	blockCloner = blocks => {
