@@ -1,0 +1,60 @@
+.container .header {
+  padding: 45px 0 45px 0; }
+  .container .header .title {
+    font-size: 36px; }
+    .container .header .title h3 {
+      margin: 0; }
+  .container .header .subtitle {
+    font-size: 28px; }
+
+.container .get-focused-btn {
+  height: 50px;
+  width: 265px;
+  font-size: 20px;
+  font-weight: 700;
+  border: 2px solid #5aca0e;
+  border-radius: 5px;
+  cursor: pointer; }
+  .container .get-focused-btn:hover {
+    background-color: #5aca0e;
+    color: #fff;
+    opacity: 0.7; }
+  .container .get-focused-btn a {
+    text-decoration: none; }
+
+.container .info-blocks {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding-top: 90px; }
+  .container .info-blocks .info-block {
+    width: 690px;
+    height: 100%;
+    margin: 20px 20px;
+    background-color: #fff;
+    border: 3px solid #979797;
+    border-radius: 5px; }
+    .container .info-blocks .info-block .info-content {
+      padding: 20px; }
+      .container .info-blocks .info-block .info-content h3 {
+        font-size: 36px; }
+      .container .info-blocks .info-block .info-content p {
+        font-size: 28px; }
+
+.container .social-details {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap; }
+  .container .social-details .social-block {
+    width: 690px;
+    height: 150px;
+    padding-top: 40px; }
+    .container .social-details .social-block .github {
+      width: 225px; }
+    .container .social-details .social-block .twitch {
+      width: 200px; }
+    .container .social-details .social-block .social-text {
+      padding-top: 15px; }
+      .container .social-details .social-block .social-text p {
+        font-size: 24px;
+        margin: 0; }

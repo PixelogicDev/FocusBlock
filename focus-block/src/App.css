@@ -10,14 +10,13 @@
   .nav .nav-options {
     float: right;
     font-size: 28px; }
-    .nav .nav-options ul {
-      list-style-type: none; }
-      .nav .nav-options ul li {
-        display: inline;
-        padding: 0 20px 0 20px;
-        cursor: pointer; }
-        .nav .nav-options ul li:hover {
-          color: #5aca0e; }
+    .nav .nav-options ul a {
+      display: inline;
+      padding: 0 20px 0 20px;
+      text-decoration: none;
+      cursor: pointer; }
+      .nav .nav-options ul a:hover {
+        color: #5aca0e; }
 
 .content {
   display: flex;

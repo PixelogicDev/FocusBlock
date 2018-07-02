@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import Dashboard from './Components/Dashboard/Dashboard';
+import About from './Components/About/About';
 
 // Styles //
 import './App.css';
@@ -13,8 +14,8 @@ class App extends Component {
 					<div className="title">FocusBlock</div>
 					<div className="nav-options">
 						<ul>
-							<li>Dashboard</li>
-							<li>About</li>
+							<Link to="/dashboard">Dashboard</Link>
+							<Link to="/about">About</Link>
 						</ul>
 					</div>
 				</div>
@@ -32,7 +33,7 @@ class App extends Component {
 						<Route exact path="/" component={Dashboard} />
 						<Route exact path="/dashboard" component={Dashboard} />
 						<Route exact path="/dashboard/:id" component={Dashboard} />
-						{/* <Route path="/about" component={Schedule} /> */}
+						<Route path="/about" component={About} />
 					</Switch>
 				</div>
 			</Fragment>
