@@ -101,3 +101,9 @@
     background-color: #fb9595; }
   100% {
     background-color: #fff; } }
+
+@media (max-width: 768px) {
+  .block {
+    width: 100%;
+    max-width: 100%;
+    margin: 2%; } }

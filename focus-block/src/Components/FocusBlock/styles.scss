@@ -132,3 +132,11 @@ $end-color: #fb9595;
 .end {
 	@include status-keyframe-animation(end-progress, $end-color, 15s);
 }
+
+@media (max-width: 768px) {
+	.block {
+		width: 100%;
+		max-width: 100%;
+		margin: 2%;
+	}
+}

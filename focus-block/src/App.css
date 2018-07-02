@@ -25,3 +25,29 @@
   text-align: center;
   flex-direction: column;
   position: relative; }
+
+@media (max-width: 414px) {
+  .nav .title {
+    text-align: center;
+    display: block;
+    margin: 21px 0 0 0; }
+  .nav .nav-options {
+    float: none; } }
+
+@media (max-width: 411px) {
+  .nav-options {
+    text-align: center; }
+    .nav-options ul {
+      padding: 0; } }
+
+@media (max-width: 375px) {
+  .nav .title {
+    text-align: center;
+    display: block;
+    margin: 21px 0 0 0; }
+  .nav .nav-options {
+    float: none; } }
+
+@media (max-width: 320px) {
+  .nav-options ul {
+    padding: 0; } }
