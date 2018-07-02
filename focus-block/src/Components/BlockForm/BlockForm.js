@@ -23,7 +23,7 @@ class BlockForm extends Component {
 				timer: '',
 				customTimer: 15,
 				contact: '',
-				formErrors: { title: '', timer: 'valid', contact: '' },
+				formErrors: { title: '', timer: 'valid', contact: 'valid' },
 				formValid: false
 			};
 		}

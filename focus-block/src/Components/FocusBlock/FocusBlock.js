@@ -135,7 +135,10 @@ class FocusBlock extends Component {
 					friendlyTimer: 'Times up!'
 				});
 
-				this.sendEmail();
+				if (this.state.contact !== '') {
+					this.sendEmail();
+					console.log('Email sent.');
+				}
 				clearInterval(this.state.timerRef);
 			}
 		}, 1000);
