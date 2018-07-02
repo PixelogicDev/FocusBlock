@@ -1,6 +1,7 @@
 .block {
-  width: 560px;
+  width: 40%;
   height: 445px;
+  margin: 2% 2%;
   border: 3px solid #979797;
   background-color: #fff;
   border-radius: 5px;

@@ -45,7 +45,6 @@ class Dashboard extends Component {
 			this.state.service
 				.getUser(userId)
 				.then(result => {
-					console.log(result);
 					this.setState({ user: result });
 					console.log('User dashboard set.');
 				})
@@ -195,7 +194,7 @@ class Dashboard extends Component {
 	};
 
 	showBlockForm = () => {
-		return this.state.user.focusBlocks.length === 0 || this.state.isAdding;
+		return this.state.user.focusBlocks.length === 0;
 	};
 
 	render() {
@@ -221,6 +220,7 @@ class Dashboard extends Component {
 							{this.state.user.focusBlocks.map((block, i) => (
 								<FocusBlock events={triggerObj} block={block} key={i} />
 							))}
+							{this.state.isAdding ? <BlockForm triggers={triggerObj} /> : ''}
 						</div>
 					)}
 				</div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './styles.css';
 
 class BlockForm extends Component {
@@ -184,94 +184,98 @@ class BlockForm extends Component {
 
 	render() {
 		return (
-			<form id="blockForm" onSubmit={this.blockEvent}>
-				<label>What are you focusing on?</label>
-				<input
-					name="title"
-					placeholder="Title"
-					type="text"
-					value={this.state.title}
-					onChange={this.handleChange}
-				/>
-				{this.state.formErrors.title !== 'valid' ? (
-					<div className="error-label">{this.state.formErrors.title}</div>
-				) : (
-					''
-				)}
-				<label>How long do you need to focus?</label>
-				<select
-					id="timer"
-					name="timer"
-					value={this.state.timer}
-					onChange={this.handleChange}
-				>
-					<option value="15">15m</option>
-					<option value="30">30m</option>
-					<option value="45">45m</option>
-					<option value="60">1h</option>
-					<option value="custom">Custom</option>
-				</select>
-				{this.state.timer === 'custom' ? (
-					<input
-						name="customTimer"
-						placeholder="Time in mins"
-						type="number"
-						value={this.state.customTimer}
-						onChange={this.handleChange}
-					/>
-				) : (
-					''
-				)}
-				{this.state.formErrors.timer !== 'valid' ? (
-					<div className="error-label">{this.state.formErrors.timer}</div>
-				) : (
-					''
-				)}
-				<label>Who should be contacted when time is up?</label>
-				<input
-					name="contact"
-					placeholder="Email"
-					type="text"
-					value={this.state.contact}
-					onChange={this.handleChange}
-				/>
-				{this.state.formErrors.contact !== 'valid' ? (
-					<div className="error-label">{this.state.formErrors.contact}</div>
-				) : (
-					''
-				)}
-
-				{this.props.isEditing ? (
-					<div className="action-buttons">
-						<button
-							className="action-delete"
-							onClick={() => this.props.focusBlock.delete()}
+			<Fragment>
+				<div className="form-content">
+					<form id="blockForm" onSubmit={this.blockEvent}>
+						<label>What are you focusing on?</label>
+						<input
+							name="title"
+							placeholder="Title"
+							type="text"
+							value={this.state.title}
+							onChange={this.handleChange}
+						/>
+						{this.state.formErrors.title !== 'valid' ? (
+							<div className="error-label">{this.state.formErrors.title}</div>
+						) : (
+							''
+						)}
+						<label>How long do you need to focus?</label>
+						<select
+							id="timer"
+							name="timer"
+							value={this.state.timer}
+							onChange={this.handleChange}
 						>
-							<img
-								src={require('../../Assets/delete-trash@2x.png')}
-								alt="Delete focus block trash can button"
+							<option value="15">15m</option>
+							<option value="30">30m</option>
+							<option value="45">45m</option>
+							<option value="60">1h</option>
+							<option value="custom">Custom</option>
+						</select>
+						{this.state.timer === 'custom' ? (
+							<input
+								name="customTimer"
+								placeholder="Time in mins"
+								type="number"
+								value={this.state.customTimer}
+								onChange={this.handleChange}
 							/>
-						</button>
-						<button
-							className="action-cancel"
-							onClick={() =>
-								this.props.focusBlock.setState({
-									isEditing: false
-								})
-							}
-						>
-							Cancel
-						</button>
-						<button disabled={!this.state.formValid} type="submit">
-							Update
-						</button>
-					</div>
-				) : (
-					<button disabled={!this.state.formValid} type="submit">
-						Create
-					</button>
-				)}
-			</form>
+						) : (
+							''
+						)}
+						{this.state.formErrors.timer !== 'valid' ? (
+							<div className="error-label">{this.state.formErrors.timer}</div>
+						) : (
+							''
+						)}
+						<label>Who should be contacted when time is up?</label>
+						<input
+							name="contact"
+							placeholder="Email"
+							type="text"
+							value={this.state.contact}
+							onChange={this.handleChange}
+						/>
+						{this.state.formErrors.contact !== 'valid' ? (
+							<div className="error-label">{this.state.formErrors.contact}</div>
+						) : (
+							''
+						)}
+
+						{this.props.isEditing ? (
+							<div className="action-buttons">
+								<button
+									className="action-delete"
+									onClick={() => this.props.focusBlock.delete()}
+								>
+									<img
+										src={require('../../Assets/delete-trash@2x.png')}
+										alt="Delete focus block trash can button"
+									/>
+								</button>
+								<button
+									className="action-cancel"
+									onClick={() =>
+										this.props.focusBlock.setState({
+											isEditing: false
+										})
+									}
+								>
+									Cancel
+								</button>
+								<button disabled={!this.state.formValid} type="submit">
+									Update
+								</button>
+							</div>
+						) : (
+							<button disabled={!this.state.formValid} type="submit">
+								Create
+							</button>
+						)}
+					</form>
+				</div>
+			</Fragment>
 		);
 	}
 }
