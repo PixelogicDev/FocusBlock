@@ -7,10 +7,7 @@ button {
 	font-family: 'Quicksand', sans-serif;
 }
 
-#root {
-	height: 100%;
-}
-
 body {
-	height: 100vh;
+	background: linear-gradient(#f2f4ff, #d4dbf6);
+	background-attachment: fixed;
 }

@@ -20,7 +20,7 @@ server.post('/new', async (req, res) => {
 	let userObj = {
 		_id: id,
 		name: '',
-		url: `${process.env.BASE_PATH}/${id}`,
+		url: `${process.env.BASE_PATH}/dashboard/${id}`,
 		focusBlocks: []
 	};
 	// Write to db //
