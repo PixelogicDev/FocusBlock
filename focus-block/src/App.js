@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import Dashboard from './Components/Dashboard/Dashboard';
 
 // Styles //
@@ -9,10 +10,30 @@ class App extends Component {
 		return (
 			<Fragment>
 				<div className="nav">
-					<h1>FocusBlock</h1>
+					<div className="title">FocusBlock</div>
+					<div className="nav-options">
+						<ul>
+							<li>Dashboard</li>
+							<li>About</li>
+						</ul>
+					</div>
 				</div>
 				<div className="content">
-					<Dashboard />
+					{/*
+						/ -> navigate to Dashboard component. 
+							-> Check for id param in route, if not there, create new user in DB with proper URL
+						
+						/dashboard -> navigate to dashboard component and create new user in DB with proper URL
+
+						/dashboard/:id -> navigate to dashboard component and check for valid id
+							-> If id is not valid either show error, or create new user with valid id
+					*/}
+					<Switch>
+						<Route exact path="/" component={Dashboard} />
+						<Route exact path="/dashboard" component={Dashboard} />
+						<Route exact path="/dashboard/:id" component={Dashboard} />
+						{/* <Route path="/about" component={Schedule} /> */}
+					</Switch>
 				</div>
 			</Fragment>
 		);

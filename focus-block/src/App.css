@@ -1,7 +1,23 @@
 .nav {
+  width: 100%;
+  display: inline-block;
   border-bottom: 1px solid #979797; }
-  .nav h1 {
-    margin-left: 15px; }
+  .nav .title {
+    display: inline-block;
+    font-size: 36px;
+    font-weight: 500;
+    margin: 21px 0 21px 20px; }
+  .nav .nav-options {
+    float: right;
+    font-size: 28px; }
+    .nav .nav-options ul {
+      list-style-type: none; }
+      .nav .nav-options ul li {
+        display: inline;
+        padding: 0 20px 0 20px;
+        cursor: pointer; }
+        .nav .nav-options ul li:hover {
+          color: #5aca0e; }
 
 .content {
   display: flex;

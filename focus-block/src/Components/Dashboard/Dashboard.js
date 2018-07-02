@@ -8,6 +8,7 @@ import './styles.css';
 class Dashboard extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			user: {
 				_id: '',
@@ -18,27 +19,35 @@ class Dashboard extends Component {
 			isAdding: false,
 			service: new ServiceContainer()
 		};
-	}
 
-	componentDidMount() {
-		// Check for user //
-		let userId = this.getUserId(window.location.pathname);
-		if (userId) {
-			this.state.service
-				.getUser(userId)
+		// If new user, redirect to their unique url //
+		if (!props.match.params.id) {
+			let serviceContainer = new ServiceContainer();
+			// Create user and redirect //
+			serviceContainer
+				.createUser()
 				.then(result => {
-					this.setState({ user: result });
-					console.log('User dashboard set.');
+					this.setState({
+						user: result
+					});
+					this.props.history.push(`/dashboard/${result._id}`);
 				})
 				.catch(error => {
 					console.log(error);
 				});
-		} else {
+		}
+	}
+
+	componentDidMount() {
+		// If userID is part of path, get user from DB //
+		let userId = this.props.match.params.id;
+		if (userId) {
 			this.state.service
-				.createUser()
+				.getUser(userId)
 				.then(result => {
+					console.log(result);
 					this.setState({ user: result });
-					console.log('User created & dashboard set.');
+					console.log('User dashboard set.');
 				})
 				.catch(error => {
 					console.log(error);
