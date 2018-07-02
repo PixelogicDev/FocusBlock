@@ -20,7 +20,7 @@ class BlockForm extends Component {
 			// Creates a new focusBlock //
 			currentState = {
 				title: '',
-				timer: '',
+				timer: 15,
 				customTimer: 15,
 				contact: '',
 				formErrors: { title: '', timer: 'valid', contact: 'valid' },
