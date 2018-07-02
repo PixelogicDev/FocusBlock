@@ -74,7 +74,7 @@ class BlockForm extends Component {
 			id: this.uuid(),
 			title: this.state.title,
 			timer: this.state.timer,
-			customTimer: 15,
+			customTimer: this.state.customTimer,
 			friendlyTimer: this.getFriendlyTime(),
 			contact: this.state.contact,
 			contactVisible: false,
