@@ -1,5 +1,10 @@
 import { Component } from 'react';
 
+/* 
+	This is a component created around the library https://smtpjs.com/. All core logic is part of this library,
+	I just changed to ES6 syntax and created a React component out of it.
+*/
+
 class Email extends Component {
 	//-- LIBRARY FROM https://smtpjs.com/ --//
 	/* SmtpJS.com - v2.0.1 */

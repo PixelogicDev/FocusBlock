@@ -1,10 +1,14 @@
 import { Component } from 'react';
 
+/*
+	This component houses all the service calls needed to connect with the server.
+*/
+
 class ServiceContainer extends Component {
+	// POST create new user in DB //
 	createUser = () => {
 		return new Promise((resolve, reject) => {
 			let json = fetch(`${process.env.REACT_APP_API_BASE}/new`, {
-				body: JSON.stringify({ name: 'Alec' }),
 				credentials: 'omit',
 				headers: {
 					'content-type': 'application/json'
@@ -22,6 +26,7 @@ class ServiceContainer extends Component {
 		});
 	};
 
+	// GET user based on ID //
 	getUser = id => {
 		return new Promise((resolve, reject) => {
 			console.log(`Getting user with id: ${id}...`);
@@ -40,6 +45,7 @@ class ServiceContainer extends Component {
 		});
 	};
 
+	// POST update on user by ID //
 	updateUser = (id, focusBlocks) => {
 		return new Promise((resolve, reject) => {
 			console.log(`Updating user with id: ${id}...`);

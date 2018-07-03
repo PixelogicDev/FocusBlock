@@ -4,6 +4,10 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import About from './Components/About/About';
 import './App.css';
 
+/* 
+	This is the main component where all other child components render in.
+*/
+
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -13,6 +17,7 @@ class App extends Component {
 		};
 	}
 
+	// Need this to check to see if there is a current id in URL. We need to save the path to navigate
 	//-- MAD PROPS HiDeoo -- //
 	static getDerivedStateFromProps(props, state) {
 		let pathname = props.history.location.pathname.split('/');
@@ -27,11 +32,13 @@ class App extends Component {
 	}
 
 	//-- Helpers --//
+
+	// Get current dashboard path to bring user back to their current FocusBlocks //
 	getPath = () => {
 		let pathname = this.props.history.location.pathname;
 
 		if (pathname === '/about') {
-			// Get about ref and grab dashPath url //
+			// Get About comp ref and grab dashPath url //
 			if (this.aboutRef.props.dashPath !== '') {
 				this.props.history.push(this.aboutRef.props.dashPath);
 			} else {

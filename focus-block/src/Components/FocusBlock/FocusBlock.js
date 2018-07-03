@@ -2,12 +2,14 @@ import React, { Component, Fragment } from 'react';
 import BlockForm from '../BlockForm/BlockForm';
 import Email from '../../Containers/SmtpContainer';
 import './styles.css';
-
+/*
+	This is the actual FocusBlock that describes everything a FocusBlock is and should do.
+*/
 class FocusBlock extends Component {
 	constructor(props) {
 		super(props);
 
-		// New or updating //
+		// State is the same for either new or updating //
 		this.state = {
 			id: props.block.id === '' ? this.uuid() : props.block.id,
 			title: props.block.title,
@@ -40,6 +42,7 @@ class FocusBlock extends Component {
 		);
 	}
 
+	// Convert the number value of the timer to a more valuable unit of time //
 	getFriendlyTime = (timer, customTimer) => {
 		let friendlyTimer = '';
 		let timerVal;
@@ -59,6 +62,7 @@ class FocusBlock extends Component {
 		return friendlyTimer;
 	};
 
+	// Toggle the FocusBlock to start or stop //
 	toggleBlock = () => {
 		this.setState({
 			blockStarted: !this.state.blockStarted,
@@ -69,13 +73,16 @@ class FocusBlock extends Component {
 		this.toggleTimer();
 	};
 
+	// Email composition that is sent to designated person if email is provided //
 	sendEmail = () => {
-		// Send out email //
 		let mailer = new Email();
 		let sender = 'support@pixelogicapps.com';
-		let subject = 'Requesting Help!';
-		//TODO: Figure out how to get username/name/title/etc
-		let body = `FooBar is requesting your help with ${this.state.title}!`;
+		let subject = `Requesting Help: ${this.state.title}`;
+		let body = `
+			Hi from Pixelogic Support!\n
+			Looks like someone is requesting your help with task: ${this.state.title}!\n
+			Brought to you by FocusBlock(https://www.focusblock.stream)
+		`;
 		let server = 'smtp.sendgrid.net';
 
 		mailer.send(
@@ -89,6 +96,7 @@ class FocusBlock extends Component {
 		);
 	};
 
+	// Setup the timer interval to start and stop countdown //
 	createTimerInterval = () => {
 		// Grab the current block minutes //
 		let timerVal;
@@ -144,6 +152,7 @@ class FocusBlock extends Component {
 		}, 1000);
 	};
 
+	// This will start or stop the timer logic as a whole //
 	toggleTimer = () => {
 		if (this.state.blockStarted) {
 			clearInterval(this.state.timerRef);
@@ -155,6 +164,7 @@ class FocusBlock extends Component {
 		}
 	};
 
+	// When adding a new email, validate and then set state //
 	contactBlurEvent = event => {
 		let targetVal = event.target.value;
 		let validContact = targetVal.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
@@ -172,22 +182,26 @@ class FocusBlock extends Component {
 		}
 	};
 
+	// Hide or show contact on click //
 	toggleContact = event => {
 		this.setState({
 			contactVisible: !this.state.contactVisible
 		});
 	};
 
+	// Show BlockForm in edit mode on click //
 	toggleEdit = () => {
 		this.setState({ isEditing: !this.state.isEditing });
 	};
 
+	// Delete FocusBlock event //
 	delete = () => {
 		// Trigger update on dashboard by passing comp ID //
 		this.state.dashboardEvents.delete(this.state.id);
 	};
 
 	render() {
+		// Setup dynamic class using classnames module //
 		let classNames = require('classnames');
 		let classes = classNames('block', {
 			start: this.state.currentProgress === 'start' && this.state.blockStarted,

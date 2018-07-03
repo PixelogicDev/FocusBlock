@@ -5,14 +5,19 @@ import AddBlockButton from './AddBlockButton/AddBlockButton';
 import ServiceContainer from '../../Containers/ServiceContainer';
 import './styles.css';
 
+/* 
+	The Dashboard component is used to house all the FocusBlocks you have created.
+	NOTE: I did not want to keep any emails in the DB, so all emails are stripped before network call.
+*/
+
 class Dashboard extends Component {
 	constructor(props) {
 		super(props);
 
+		// Init state //
 		this.state = {
 			user: {
 				_id: '',
-				name: '',
 				url: '',
 				focusBlocks: []
 			},
@@ -55,6 +60,8 @@ class Dashboard extends Component {
 	}
 
 	//-- Helpers --//
+
+	// Event used to create a new FocusBlock & send to DB //
 	createBlock = focusBlock => {
 		// Get current blocks in state //
 		let currentBlocks = this.state.user.focusBlocks;
@@ -79,6 +86,7 @@ class Dashboard extends Component {
 			});
 	};
 
+	// Event used to update a FocusBlock & send to DB //
 	updateBlock = focusBlock => {
 		// Search for FocusBlock by ID //
 		let index = this.findBlockIndex(focusBlock.id);
@@ -110,6 +118,7 @@ class Dashboard extends Component {
 		}
 	};
 
+	// Event used to delete a FocusBlock & send to DB //
 	deleteBlock = id => {
 		// Find index of block //
 		let index = this.findBlockIndex(id);
@@ -119,7 +128,7 @@ class Dashboard extends Component {
 			let willDelete = window.confirm(
 				`This action will delete "${
 					this.state.user.focusBlocks[index].title
-				}". Continue?`
+				}". Press 'Okay' to confirm.`
 			);
 
 			if (willDelete) {
@@ -150,12 +159,14 @@ class Dashboard extends Component {
 		}
 	};
 
+	// Get ID from path and parse //
 	getUserId = path => {
 		// Split path and check for id //
 		let idSplit = path.split('/');
 		return idSplit[1] !== '' ? idSplit[1] : null;
 	};
 
+	// Find a FocusBlock in the state given an ID //
 	findBlockIndex = id => {
 		return this.state.user.focusBlocks
 			.map(block => {
@@ -164,6 +175,7 @@ class Dashboard extends Component {
 			.indexOf(id);
 	};
 
+	// Logic to get current FocusBlocks and update array //
 	updateUserBlocks = newBlocks => {
 		// Get current user state //
 		let currentUser = { ...this.state.user };
@@ -171,6 +183,7 @@ class Dashboard extends Component {
 		return currentUser;
 	};
 
+	// Used to strip emails from each FocusBlock in array //
 	blockCloner = blocks => {
 		let cloneArray = [];
 
@@ -187,17 +200,20 @@ class Dashboard extends Component {
 		return cloneArray;
 	};
 
-	addNewBlock = () => {
+	// Used to show the BlockForm to create a new FocusBlock //
+	addNewBlockTrigger = () => {
 		this.setState({
 			isAdding: true
 		});
 	};
 
+	// If there are no FocusBlocks in state, just show the BlockForm //
 	showBlockForm = () => {
 		return this.state.user.focusBlocks.length === 0;
 	};
 
 	render() {
+		// This obj is used to trigger the events on this component from other components //
 		let triggerObj = {
 			create: this.createBlock,
 			update: this.updateBlock,
@@ -226,7 +242,7 @@ class Dashboard extends Component {
 				</div>
 				<AddBlockButton
 					blockCount={this.state.user.focusBlocks.length}
-					addBlockTrigger={this.addNewBlock}
+					addBlockTrigger={this.addNewBlockTrigger}
 				/>
 			</Fragment>
 		);

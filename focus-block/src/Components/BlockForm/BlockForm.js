@@ -1,10 +1,15 @@
 import React, { Component, Fragment } from 'react';
 import './styles.css';
 
+/*
+	The BlockForm component is a form that is here to help you create a FocusBlock.
+*/
+
 class BlockForm extends Component {
 	constructor(props) {
 		super(props);
 
+		// This component can be rendered on creation and on edit. Set state depending on scenario //
 		let currentState;
 		if (this.props.isEditing) {
 			currentState = {
@@ -15,7 +20,6 @@ class BlockForm extends Component {
 				formErrors: { title: 'valid', timer: 'valid', contact: 'valid' },
 				formValid: true
 			};
-			// this.setTimeSelect(this.state.focusBlock.timer);
 		} else {
 			// Creates a new focusBlock //
 			currentState = {
@@ -42,6 +46,7 @@ class BlockForm extends Component {
 		);
 	}
 
+	// When a field is changed in the form, save to state //
 	handleChange = event => {
 		this.validateField(event);
 		this.setState({
@@ -49,6 +54,7 @@ class BlockForm extends Component {
 		});
 	};
 
+	// Convert the number value of the timer to a more valuable unit of time //
 	getFriendlyTime = () => {
 		let friendlyTimer = '';
 		let timerVal;
@@ -68,8 +74,8 @@ class BlockForm extends Component {
 		return friendlyTimer;
 	};
 
+	// Use this to create the model of a FocusBlock on sumbit with the newly added form data //
 	initFocusBlock = () => {
-		// Create initial FocusBlock data object //
 		return {
 			id: this.uuid(),
 			title: this.state.title,
@@ -87,9 +93,9 @@ class BlockForm extends Component {
 		};
 	};
 
+	// If editing update current FocusBlock passed in; else init new FocusBlock with form data //
 	blockEvent = event => {
 		if (this.props.isEditing) {
-			console.log('Updating block...');
 			let focusBlock = this.props.focusBlock;
 			let updatedState = {
 				title: this.state.title,
@@ -112,7 +118,8 @@ class BlockForm extends Component {
 
 		event.preventDefault();
 	};
-	//-- Helpers --//
+
+	// Validate form field //
 	validateField = event => {
 		let titleValid = this.state.formErrors.title;
 		let timerValid = this.state.formErrors.timer;
@@ -138,6 +145,7 @@ class BlockForm extends Component {
 				);
 
 				contactValid =
+					// Email address is not required to continue //
 					validContact || event.target.value === ''
 						? 'valid'
 						: 'This is not an email, please try again.';
@@ -149,6 +157,7 @@ class BlockForm extends Component {
 		this.formValid(titleValid, timerValid, contactValid);
 	};
 
+	// Check to see if entire form is valid before submitting //
 	formValid = (title, timer, contact) => {
 		let isFormValid = false;
 		if (title === 'valid' && timer === 'valid' && contact === 'valid') {
@@ -165,28 +174,13 @@ class BlockForm extends Component {
 		});
 	};
 
-	// TODO: Fix this up with refs, the proper way //
-	/* setTimeSelect = currentTimeVal => {
-		// Create array of options to loop through //
-		let selectOptions = document.getElementById('timer').options;
-
-		console.log(selectOptions);
-
-		// Check for the value in the array //
-		for (let i in selectOptions) {
-			if (currentTimeVal === parseInt(selectOptions[i].value, 10)) {
-				console.log(selectOptions[i].value);
-			}
-		}
-
-		// If not in the array, set to custom //
-	}; */
-
 	render() {
 		return (
 			<Fragment>
 				<div className="form-content">
+					{/* Form Start */}
 					<form id="blockForm" onSubmit={this.blockEvent}>
+						{/* FocusBlock Title */}
 						<label>What are you focusing on?</label>
 						<input
 							name="title"
@@ -200,6 +194,7 @@ class BlockForm extends Component {
 						) : (
 							''
 						)}
+						{/* FocusBlock Timer */}
 						<label>How long do you need to focus?</label>
 						<select
 							id="timer"
@@ -229,6 +224,7 @@ class BlockForm extends Component {
 						) : (
 							''
 						)}
+						{/* FocusBlock Email To Contact */}
 						<label>Who should be contacted when time is up?</label>
 						<input
 							name="contact"
@@ -242,7 +238,6 @@ class BlockForm extends Component {
 						) : (
 							''
 						)}
-
 						{this.props.isEditing ? (
 							<div className="action-buttons">
 								<button
@@ -274,6 +269,7 @@ class BlockForm extends Component {
 							</button>
 						)}
 					</form>
+					{/* Form End */}
 				</div>
 			</Fragment>
 		);

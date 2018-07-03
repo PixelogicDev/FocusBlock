@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './styles.css';
 
+/* 
+	Simple Button Component to display BlockForm and add a new FocusBlock.
+*/
+
 class AddBlockButton extends Component {
 	constructor(props) {
 		super(props);
@@ -30,6 +34,7 @@ class AddBlockButton extends Component {
 		}
 	};
 
+	// Use this to set the state of the button. If just BlockForm is up, disable button; else enable //
 	addClasses = () => {
 		let classString = 'action-add';
 		if (this.props.blockCount === 0) {

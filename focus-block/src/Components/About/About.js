@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
+/* 
+	This component is used to display basic information about FocusBlock
+	and link to Twitch & Github accounts
+*/
 class About extends Component {
 	render() {
 		return (
@@ -10,9 +14,7 @@ class About extends Component {
 					<div className="title">
 						<h3>FocusBlock</h3>
 					</div>
-					<div className="subtitle">
-						Complete All Your Tasks With Some Backup.
-					</div>
+					<div className="subtitle">Be The Most Productive Version Of You</div>
 				</div>
 				<button className="get-focused-btn">
 					<Link to="/dashboard">Get Focused</Link>
@@ -26,7 +28,7 @@ class About extends Component {
 							</p>
 							<p>
 								Set the amount of time a task should take and let FocusBlock
-								remind you when you expect to finish
+								remind you when time is up
 							</p>
 						</div>
 					</div>
@@ -39,7 +41,7 @@ class About extends Component {
 							</p>
 							<p>
 								Set someones email address to connect them automatically if you
-								are having trouble!
+								are having trouble
 							</p>
 						</div>
 					</div>
