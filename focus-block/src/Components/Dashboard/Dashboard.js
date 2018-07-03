@@ -224,7 +224,10 @@ class Dashboard extends Component {
 						</div>
 					)}
 				</div>
-				<AddBlockButton addBlockTrigger={this.addNewBlock} />
+				<AddBlockButton
+					blockCount={this.state.user.focusBlocks.length}
+					addBlockTrigger={this.addNewBlock}
+				/>
 			</Fragment>
 		);
 	}
