@@ -2,12 +2,12 @@ const MongoClient = require('mongodb').MongoClient;
 var db;
 
 MongoClient.connect(
-	'mongodb://localhost:27017/focusblock',
+	process.env.DB_PATH,
+	{ useNewUrlParser: true },
 	(error, client) => {
 		if (error) throw error;
 
 		console.log('Connected to FocusBlock DB');
-		// TODO: Create .env file //
 		db = client.db(process.env.DB_NAME);
 	}
 );
