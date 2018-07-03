@@ -1,12 +1,54 @@
 import React, { Component, Fragment } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, withRouter } from 'react-router-dom';
 import Dashboard from './Components/Dashboard/Dashboard';
 import About from './Components/About/About';
-
-// Styles //
 import './App.css';
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			dashboardPath: ''
+		};
+	}
+
+	//-- MAD PROPS HiDeoo -- //
+	static getDerivedStateFromProps(props, state) {
+		let pathname = props.history.location.pathname.split('/');
+		let joined = '';
+
+		if (pathname.length === 3 && state.dashboardPath === '') {
+			console.log(pathname);
+			joined = pathname.join('/');
+			return { dashboardPath: joined };
+		}
+
+		return null;
+	}
+
+	//-- Helpers --//
+	getPath = () => {
+		let pathname = this.props.history.location.pathname;
+
+		if (pathname === '/about') {
+			// Get about ref and grab dashPath url //
+			if (this.aboutRef.props.dashPath !== '') {
+				this.props.history.push(this.aboutRef.props.dashPath);
+			} else {
+				this.props.history.push('/dashboard');
+			}
+		}
+
+		if (pathname === '/dashboard') {
+			if (this.state.dashboardPath !== '') {
+				this.props.history.push(this.state.dashboardPath);
+			} else {
+				this.props.history.push('/dashboard');
+			}
+		}
+	};
+
 	render() {
 		return (
 			<Fragment>
@@ -14,26 +56,22 @@ class App extends Component {
 					<div className="title">FocusBlock</div>
 					<div className="nav-options">
 						<ul>
-							<Link to="/dashboard">Dashboard</Link>
+							<a onClick={this.getPath}>Dashboard</a>
 							<Link to="/about">About</Link>
 						</ul>
 					</div>
 				</div>
 				<div className="content">
-					{/*
-						/ -> navigate to Dashboard component. 
-							-> Check for id param in route, if not there, create new user in DB with proper URL
-						
-						/dashboard -> navigate to dashboard component and create new user in DB with proper URL
-
-						/dashboard/:id -> navigate to dashboard component and check for valid id
-							-> If id is not valid either show error, or create new user with valid id
-					*/}
 					<Switch>
-						<Route exact path="/" component={Dashboard} />
+						<Route exact path="/" component={About} />
 						<Route exact path="/dashboard" component={Dashboard} />
 						<Route exact path="/dashboard/:id" component={Dashboard} />
-						<Route path="/about" component={About} />
+						<Route
+							path="/about"
+							component={About}
+							dashPath={this.state.dashboardPath}
+							ref={ref => (this.aboutRef = ref)}
+						/>
 					</Switch>
 				</div>
 			</Fragment>
@@ -41,4 +79,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default withRouter(App);
