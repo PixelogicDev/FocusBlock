@@ -1,13 +1,15 @@
+//-- Properties --//
 const MongoClient = require('mongodb').MongoClient;
 var db;
 
+// Connect to DB //
 MongoClient.connect(
 	process.env.DB_PATH,
 	{ useNewUrlParser: true },
 	(error, client) => {
 		if (error) throw error;
 
-		console.log('Connected to FocusBlock DB');
+		console.log('Connected to FocusBlock DB!');
 		db = client.db(process.env.DB_NAME);
 	}
 );
@@ -18,7 +20,6 @@ module.exports = {
 			console.log('[db.addUser] Starting to add user...');
 
 			let collection = db.collection('users');
-
 			collection.insertOne(user, (insertError, data) => {
 				//-- MAD PROPS panthalassadigital --//
 				if (insertError) return reject(insertError);
@@ -34,7 +35,6 @@ module.exports = {
 			console.log('[db.findUser] Looking for user...');
 
 			let collection = db.collection('users');
-
 			collection.findOne({ _id: id }, null, (error, result) => {
 				if (error) return reject(error);
 				console.log('Returning user.');
@@ -48,7 +48,6 @@ module.exports = {
 			console.log('[db.updateUser] Updating user...');
 
 			let collection = db.collection('users');
-
 			collection.update(
 				{ _id: data.id },
 				{ $set: { focusBlocks: data.focusBlocks } },
