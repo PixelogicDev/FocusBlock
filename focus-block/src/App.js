@@ -19,7 +19,6 @@ class App extends Component {
 		let joined = '';
 
 		if (pathname.length === 3 && state.dashboardPath === '') {
-			console.log(pathname);
 			joined = pathname.join('/');
 			return { dashboardPath: joined };
 		}

@@ -12,26 +12,41 @@ class AddBlockButton extends Component {
 
 	//-- Helpers -- //
 	addBlock = () => {
-		// Set didClick state //
-		this.setState({
-			didClick: true
-		});
-
-		// Trigger addBlock event //
-		this.props.addBlockTrigger();
-
-		// Set State back after animation //
-		setTimeout(() => {
+		if (this.props.blockCount !== 0) {
+			// Set didClick state //
 			this.setState({
-				didClick: false
+				didClick: true
 			});
-		}, 100);
+
+			// Trigger addBlock event //
+			this.props.addBlockTrigger();
+
+			// Set State back after animation //
+			setTimeout(() => {
+				this.setState({
+					didClick: false
+				});
+			}, 100);
+		}
+	};
+
+	addClasses = () => {
+		let classString = 'action-add';
+		if (this.props.blockCount === 0) {
+			classString += ' disabled';
+		}
+
+		if (this.state.didClick && this.props.blockCount > 0) {
+			classString += ' scale';
+		}
+
+		return classString;
 	};
 
 	render() {
 		return (
 			<img
-				className={this.state.didClick ? 'action-add scale' : 'action-add'}
+				className={this.addClasses()}
 				onClick={this.addBlock}
 				//-- MAD PROPS Tendencydriven --//
 				src={require('../../../Assets/cmjio-button@2x.png')}
