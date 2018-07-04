@@ -29,8 +29,6 @@ class ServiceContainer extends Component {
 	// GET user based on ID //
 	getUser = id => {
 		return new Promise((resolve, reject) => {
-			console.log(`Getting user with id: ${id}...`);
-
 			//-- MAD PROPS for brutusharvenius -- //
 			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`).then(
 				response => {
@@ -48,8 +46,6 @@ class ServiceContainer extends Component {
 	// POST update on user by ID //
 	updateUser = (id, focusBlocks) => {
 		return new Promise((resolve, reject) => {
-			console.log(`Updating user with id: ${id}...`);
-
 			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`, {
 				body: JSON.stringify({ focusBlocks: focusBlocks }),
 				credentials: 'omit',

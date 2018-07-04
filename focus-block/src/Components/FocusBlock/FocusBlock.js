@@ -79,9 +79,9 @@ class FocusBlock extends Component {
 		let sender = 'support@pixelogicapps.com';
 		let subject = `Requesting Help: ${this.state.title}`;
 		let body = `
-			Hi from Pixelogic Support!\n
-			Looks like someone is requesting your help with task: ${this.state.title}!\n
-			Brought to you by FocusBlock(https://www.focusblock.stream)
+			Hi from Pixelogic Support!
+			Looks like someone is requesting your help with task '${this.state.title}'
+			Brought to you by FocusBlock https://www.focusblock.stream
 		`;
 		let server = 'smtp.sendgrid.net';
 
