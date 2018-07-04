@@ -41,11 +41,11 @@ class About extends Component {
 						<div className="info-content">
 							<h3>You Always Have Backup</h3>
 							<p>
-								We don’t know everything and thats okay! Recruit someone’s help
+								We don’t know everything and that's okay! Recruit someone’s help
 								through email.
 							</p>
 							<p>
-								Set someones email address to connect them automatically if you
+								Set someone's email address to connect them automatically if you
 								are having trouble
 							</p>
 						</div>
