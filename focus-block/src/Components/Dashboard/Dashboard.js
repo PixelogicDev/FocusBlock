@@ -3,6 +3,7 @@ import FocusBlock from '../FocusBlock/FocusBlock';
 import BlockForm from '../BlockForm/BlockForm';
 import AddBlockButton from './AddBlockButton/AddBlockButton';
 import ServiceContainer from '../../Containers/ServiceContainer';
+import ReactGA from 'react-ga';
 import './styles.css';
 
 /* 
@@ -213,6 +214,10 @@ class Dashboard extends Component {
 	};
 
 	render() {
+		// Google Analytics //
+		ReactGA.initialize('UA-90746218-3');
+		ReactGA.pageview(window.location.pathname);
+
 		// This obj is used to trigger the events on this component from other components //
 		let triggerObj = {
 			create: this.createBlock,

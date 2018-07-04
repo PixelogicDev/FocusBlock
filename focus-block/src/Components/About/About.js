@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ReactGA from 'react-ga';
 import './styles.css';
 
 /* 
@@ -8,6 +9,10 @@ import './styles.css';
 */
 class About extends Component {
 	render() {
+		// Google Analytics //
+		ReactGA.initialize('UA-90746218-3');
+		ReactGA.pageview(window.location.pathname);
+
 		return (
 			<div className="container">
 				<div className="header">
