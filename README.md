@@ -134,7 +134,7 @@ This will run and build the client. At this point you are good to go with the cl
 
 ### Thank you
 
-I want to give a huge shout out to all the libraries I was able to use to make this project possible:
+I want to give a huge shout out to all the libraries I was able to use to make this project possible:<br>
 [`body-parser`](https://github.com/expressjs/body-parser)<br>
 [`cors`](https://github.com/expressjs/cors)<br>
 [`dotenv`](https://github.com/motdotla/dotenv)<br>
