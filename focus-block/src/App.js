@@ -37,21 +37,24 @@ class App extends Component {
 	getPath = () => {
 		let pathname = this.props.history.location.pathname;
 
-		if (pathname === '/about') {
-			// Get About comp ref and grab dashPath url //
-			if (this.aboutRef.props.dashPath !== '') {
-				this.props.history.push(this.aboutRef.props.dashPath);
-			} else {
+		switch (pathname) {
+			case '/about':
+				// Get About comp ref and grab dashPath url //
+				if (this.aboutRef.props.dashPath !== '') {
+					this.props.history.push(this.aboutRef.props.dashPath);
+				} else {
+					this.props.history.push('/dashboard');
+				}
+				break;
+			case '/dashbaord':
+				if (this.state.dashboardPath !== '') {
+					this.props.history.push(this.state.dashboardPath);
+				} else {
+					this.props.history.push('/dashboard');
+				}
+				break;
+			default:
 				this.props.history.push('/dashboard');
-			}
-		}
-
-		if (pathname === '/dashboard') {
-			if (this.state.dashboardPath !== '') {
-				this.props.history.push(this.state.dashboardPath);
-			} else {
-				this.props.history.push('/dashboard');
-			}
 		}
 	};
 
