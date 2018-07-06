@@ -213,7 +213,7 @@ class BlockForm extends Component {
 								name="customTimer"
 								placeholder="Time in mins"
 								type="number"
-                                min="0"
+                                min="1"
 								value={this.state.customTimer}
 								onChange={this.handleChange}
 							/>
