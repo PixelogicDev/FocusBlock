@@ -127,8 +127,9 @@ class BlockForm extends Component {
 
 		switch (event.target.name) {
 			case 'title':
-				let titleLen = event.target.value.length;
-				titleValid = titleLen > 0 ? 'valid' : 'Title cannot be empty';
+				let title = event.target.value;
+                const EMPTY_FIELD_CHECK = title.trim() === "";
+				titleValid = !EMPTY_FIELD_CHECK ?  'valid' : 'Title cannot be empty';
 				break;
 			case 'timer':
 				if (event.target.value === 'custom') {
