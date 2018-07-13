@@ -128,17 +128,16 @@ class BlockForm extends Component {
 		switch (event.target.name) {
 			case 'title':
 				let title = event.target.value;
-                const EMPTY_FIELD_CHECK = title.trim() === '';
-				titleValid = !EMPTY_FIELD_CHECK ?  'valid' : 'Title cannot be empty';
+                const EMPTY_FIELD = title.trim() === '';
+				titleValid = !EMPTY_FIELD ? 'valid' : 'Title cannot be empty';
+				break;
+			case 'customTimer':
+                const CUSTOM_TIMER_LENGTH = event.target.value >= 1 && event.target.value <= 1440;
+                timerValid = CUSTOM_TIMER_LENGTH ? 'valid' : 'Please select a time between 1 and 1440';
 				break;
 			case 'timer':
-				if (event.target.value === 'custom') {
-					timerValid = 'valid';
-				} else {
-					let timerLen = event.target.value.length;
-					timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
-				}
-
+				let timerLen = event.target.value.length;
+				timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
 				break;
 			case 'contact':
 				let validContact = event.target.value.match(
@@ -214,8 +213,6 @@ class BlockForm extends Component {
 								name="customTimer"
 								placeholder="Time in mins"
 								type="number"
-                                min="1"
-								max="525600"
 								value={this.state.customTimer}
 								onChange={this.handleChange}
 							/>
