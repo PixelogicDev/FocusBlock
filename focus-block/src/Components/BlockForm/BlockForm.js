@@ -127,17 +127,17 @@ class BlockForm extends Component {
 
 		switch (event.target.name) {
 			case 'title':
-				let titleLen = event.target.value.length;
-				titleValid = titleLen > 0 ? 'valid' : 'Title cannot be empty';
+				let title = event.target.value;
+                const EMPTY_FIELD = title.trim() === '';
+				titleValid = !EMPTY_FIELD ? 'valid' : 'Title cannot be empty';
+				break;
+			case 'customTimer':
+                const CUSTOM_TIMER_LENGTH = event.target.value >= 1 && event.target.value <= 1440;
+                timerValid = CUSTOM_TIMER_LENGTH ? 'valid' : 'Please select a time between 1 and 1440';
 				break;
 			case 'timer':
-				if (event.target.value === 'custom') {
-					timerValid = 'valid';
-				} else {
-					let timerLen = event.target.value.length;
-					timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
-				}
-
+				let timerLen = event.target.value.length;
+				timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
 				break;
 			case 'contact':
 				let validContact = event.target.value.match(
@@ -241,6 +241,7 @@ class BlockForm extends Component {
 						{this.props.isEditing ? (
 							<div className="action-buttons">
 								<button
+                                    type="button"
 									className="action-delete"
 									onClick={() => this.props.focusBlock.delete()}
 								>
@@ -250,6 +251,7 @@ class BlockForm extends Component {
 									/>
 								</button>
 								<button
+                                    type="button"
 									className="action-cancel"
 									onClick={() =>
 										this.props.focusBlock.setState({
