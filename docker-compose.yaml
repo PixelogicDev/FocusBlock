@@ -1,0 +1,61 @@
+version: '3'
+services:
+  nginx:
+   container_name: focusblock-nginx
+   image: nginx:latest
+   #restart: always
+   ports:
+   - "80:80"
+   volumes:
+   - ./Nginx/conf.d:/etc/nginx/conf.d
+   links:
+     - frontend
+   depends_on:
+     - frontend
+
+  mongodb:
+    container_name: focusblock-mongodb
+    image: mongo:latest
+    command: mongod --storageEngine=wiredTiger
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./MongoDB:/data/db
+
+  backend:
+    container_name: focusblock-backend
+    build: ./Server
+    restart: on-failure
+    environment:
+      BASE_PATH: localhostxs
+      DB_HOST: mongodb:27017
+      DB_NAME: focusblock
+      PORT: 3000
+    #volumes:
+    #  - ./Server:/app
+    ports:
+      - "3000:3000"
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+
+  frontend:
+    container_name: focusblock-frontend
+    build: "./focus-block"
+    environment:
+      #SMTP Username for SMTPJS (From Sengrid)
+      REACT_APP_SMTP_USERNAME: CHANGE_ME
+      #SMTP Password for SMTPJS (From Sengrid)
+      REACT_APP_SMTP_PW: CHANGE_ME_TOO
+      #The route for your Node Server (ex. http://localhost:8000)
+      REACT_APP_API_BASE: http://backend:3000
+      PORT: 8080
+    #volumes:
+    #  - ./focus-block:/app
+    ports:
+      - "8080:8080"
+    links:
+      - backend
+    depends_on:
+      - backend
