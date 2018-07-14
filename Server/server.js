@@ -21,7 +21,7 @@ server.post('/new', async (req, res) => {
 	let id = shortid.generate();
 	let userObj = {
 		_id: id,
-		url: `${process.env.BASE_PATH}/dashboard/${id}`,
+		url: `/dashboard/${id}`,
 		focusBlocks: []
 	};
 

@@ -3,12 +3,19 @@ import { Component } from 'react';
 /*
 	This component houses all the service calls needed to connect with the server.
 */
+var API_URL;
+if (process.env.REACT_APP_ENVIRONMENT === 'docker') {
+    var API_URL = "/api";
+} else {
+    API_URL = process.env.REACT_APP_API_BASE;
+}
 
 class ServiceContainer extends Component {
-	// POST create new user in DB //
+    // POST create new user in DB //
+
 	createUser = () => {
 		return new Promise((resolve, reject) => {
-			let json = fetch(`${process.env.REACT_APP_API_BASE}/new`, {
+			let json = fetch(`${API_URL}/new`, {
 				credentials: 'omit',
 				headers: {
 					'content-type': 'application/json'
@@ -30,7 +37,7 @@ class ServiceContainer extends Component {
 	getUser = id => {
 		return new Promise((resolve, reject) => {
 			//-- MAD PROPS for brutusharvenius -- //
-			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`).then(
+			let json = fetch(`${API_URL}/${id}`).then(
 				response => {
 					return response.json();
 				}
@@ -46,7 +53,7 @@ class ServiceContainer extends Component {
 	// POST update on user by ID //
 	updateUser = (id, focusBlocks) => {
 		return new Promise((resolve, reject) => {
-			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`, {
+			let json = fetch(`${API_URL}/${id}`, {
 				body: JSON.stringify({ focusBlocks: focusBlocks }),
 				credentials: 'omit',
 				headers: {
