@@ -4,14 +4,15 @@ import { Component } from 'react';
 	This component houses all the service calls needed to connect with the server.
 */
 var API_URL;
-if (process.env.NODE_ENV === 'docker') {
-    API_URL = "/api/";
+if (process.env.REACT_APP_ENVIRONMENT === 'docker') {
+    var API_URL = "/api";
 } else {
     API_URL = process.env.REACT_APP_API_BASE;
 }
 
 class ServiceContainer extends Component {
     // POST create new user in DB //
+
 	createUser = () => {
 		return new Promise((resolve, reject) => {
 			let json = fetch(`${API_URL}/new`, {

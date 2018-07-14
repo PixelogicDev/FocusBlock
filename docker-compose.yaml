@@ -50,7 +50,7 @@ services:
       - REACT_APP_SMTP_PW=CHANGE_ME_TOO
       #The route for your Node Server (ex. http://localhost:8000)
       - PORT=8080
-      - NODE_ENV=docker
+      - REACT_APP_ENVIRONMENT=docker
     #volumes:
     #  - ./focus-block:/app
     ports:
