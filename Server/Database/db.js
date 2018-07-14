@@ -2,14 +2,17 @@
 const MongoClient = require('mongodb').MongoClient;
 var db;
 
+let dbstring = `mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`;
+
 // Connect to DB //
 MongoClient.connect(
-	`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`,
+	dbstring,
 	{ useNewUrlParser: true },
 	(error, client) => {
 		if (error) throw error;
 
 		console.log('Connected to FocusBlock DB!');
+		console.log(dbstring)
 		db = client.db(process.env.DB_NAME);
 	}
 );

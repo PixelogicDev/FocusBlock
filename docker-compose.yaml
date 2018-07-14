@@ -16,7 +16,7 @@ services:
   mongodb:
     container_name: focusblock-mongodb
     image: mongo:latest
-    command: mongod --storageEngine=wiredTiger
+    command: mongod
     ports:
       - "27017:27017"
     volumes:
@@ -27,10 +27,10 @@ services:
     build: ./Server
     restart: on-failure
     environment:
-      BASE_PATH: localhostxs
-      DB_HOST: mongodb:27017
-      DB_NAME: focusblock
-      PORT: 3000
+      - BASE_PATH=localhost
+      - DB_HOST=mongodb:27017
+      - DB_NAME=focusblock
+      - PORT=3000
     #volumes:
     #  - ./Server:/app
     ports:
@@ -45,12 +45,12 @@ services:
     build: "./focus-block"
     environment:
       #SMTP Username for SMTPJS (From Sengrid)
-      REACT_APP_SMTP_USERNAME: CHANGE_ME
+      - REACT_APP_SMTP_USERNAME=CHANGE_ME
       #SMTP Password for SMTPJS (From Sengrid)
-      REACT_APP_SMTP_PW: CHANGE_ME_TOO
+      - REACT_APP_SMTP_PW=CHANGE_ME_TOO
       #The route for your Node Server (ex. http://localhost:8000)
-      REACT_APP_API_BASE: http://backend:3000
-      PORT: 8080
+      - PORT=8080
+      - NODE_ENV=docker
     #volumes:
     #  - ./focus-block:/app
     ports:
