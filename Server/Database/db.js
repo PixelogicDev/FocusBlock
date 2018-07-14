@@ -4,7 +4,7 @@ var db;
 
 // Connect to DB //
 MongoClient.connect(
-	process.env.DB_PATH,
+	`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`,
 	{ useNewUrlParser: true },
 	(error, client) => {
 		if (error) throw error;
