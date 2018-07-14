@@ -94,8 +94,9 @@ FocusBlock uses a Node.js server in order to handle communication between the cl
 
 Start by creating a `.env` file that will store these properties:
 
-- `BASE_PATH`=localhost:3000
-- `DB_PATH`=mongodb://localhost:27017/focusblock
+- `BASE_PATH`=localhost
+- `PORT`=3000
+- `DB_HOST`=localhost:27017
 - `DB_NAME`=focusblock
 
 ##### Start Server
