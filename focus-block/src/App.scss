@@ -21,6 +21,10 @@
 				text-decoration: none;
 				cursor: pointer;
 
+				&:visited {
+					color: #000;
+				}
+
 				&:hover {
 					color: #5aca0e;
 				}

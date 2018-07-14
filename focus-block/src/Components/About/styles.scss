@@ -14,22 +14,21 @@
 	}
 
 	.get-focused-btn {
-		height: 50px;
-		width: 265px;
 		font-size: 20px;
 		font-weight: 700;
+		padding: 15px 60px 15px 60px;
 		border: 2px solid #5aca0e;
 		border-radius: 5px;
-		cursor: pointer;
+		text-decoration: none;
+
+		&:visited {
+			color: #000;
+		}
 
 		&:hover {
 			background-color: #5aca0e;
 			color: #fff;
 			opacity: 0.7;
-		}
-
-		a {
-			text-decoration: none;
 		}
 	}
 

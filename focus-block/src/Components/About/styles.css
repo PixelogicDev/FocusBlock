@@ -8,19 +8,18 @@
     font-size: 28px; }
 
 .container .get-focused-btn {
-  height: 50px;
-  width: 265px;
+  padding: 15px 60px 15px 60px;
   font-size: 20px;
   font-weight: 700;
   border: 2px solid #5aca0e;
   border-radius: 5px;
-  cursor: pointer; }
+  text-decoration: none; }
+  .container .get-focused-btn:visited {
+    color: #000; }
   .container .get-focused-btn:hover {
     background-color: #5aca0e;
     color: #fff;
     opacity: 0.7; }
-  .container .get-focused-btn a {
-    text-decoration: none; }
 
 .container .info-blocks {
   display: flex;
