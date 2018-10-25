@@ -1,0 +1,165 @@
+.input {
+  position: relative;
+  margin-bottom: 32px;
+
+  @include for-big-desktop-up {
+    margin-bottom: 48px;
+  }
+
+  &--has-error {
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -18px;
+      top: 37px;
+      width: 8px;
+      height: 8px;
+      border-radius: 9001px;
+      background-color: $error-red;
+
+      @include for-big-desktop-up {
+        left: -24px;
+        top: 53px;
+      }
+    }
+  }
+
+  &--has-units {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+}
+
+.input__label {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px;
+  font-size: 12px;
+  font-weight: $regular-weight;
+  color: $text-black;
+
+  @include for-big-desktop-up {
+    font-size: 16px;
+    margin-bottom: 13px;
+  }
+
+}
+
+.input__sublabel {
+  color: $text-gray;
+}
+
+.input__field {
+  width: 100%;
+  padding: 13px 12px 12px;
+  border: 1px solid $gray;
+  border-radius: 2px;
+  outline: none;
+  font-size: 14px;
+  font-weight: $regular-weight;
+  color: $text-black;
+  background-color: white;
+  box-shadow: 0 2px 6px 0 rgba($shadow-red, 0);
+  transition: box-shadow 0.2s linear, border-color 0.1s linear;
+
+  @include for-big-desktop-up {
+    font-size: 18px;
+    padding: 15px 14px 13px;
+  }
+
+  &[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+
+  &::placeholder {
+    color: $text-gray;
+  }
+
+  .input--has-error & {
+    border-color: $error-red;
+  }
+
+  &:focus {
+    border-color: $blue;
+    box-shadow: 0 6px 12px 0 rgba($shadow-red, 0.15);
+  }
+
+  &--small {
+    flex-grow: 0;
+  }
+
+  .input--has-units & {
+    width: 96px;
+    flex-grow: 1;
+
+    &--small {
+      flex-grow: 0;
+    }
+  }
+
+}
+
+.input__units {
+  margin-top: 19px;
+  margin-left: 12px;
+  font-size: 14px;
+  font-weight: $regular-weight;
+  color: $text-black;
+  
+  @include for-big-desktop-up {
+    margin-top: 21px;
+    margin-left: 14px;
+    font-size: 18px;
+  }
+}
+
+.input__hint {
+  width: 100%;
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: $regular-weight;
+  line-height: 16px;
+  color: $text-gray;
+
+  .input--has-error & {
+    color: $error-red;
+  }
+
+  @include for-big-desktop-up {
+    margin-top: 11px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+.input__suggestions {
+  display: flex;
+  width: 100%;
+}
+
+.input__suggestion {
+  margin: 12px 8px 0 0;
+  padding: 6px 12px 5px;
+  border: 1px solid $blue;
+  border-radius: 9001px;
+  background-color: transparent;
+  color: $blue;
+  font: inherit;
+  font-size: 12px;
+  font-weight: $regular-weight;
+  line-height: normal;
+  cursor: pointer;
+  transition: color 0.1s ease-in, background-color 0.1s ease-in;
+  
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  &:hover {
+    background-color: $blue;
+    color: white;
+  }
+}

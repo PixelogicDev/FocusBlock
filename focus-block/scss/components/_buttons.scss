@@ -1,0 +1,95 @@
+.btn {
+  position: relative;
+  top: 0;
+  display: inline-block;
+  margin: 0;
+  padding: 15px 15px 13px;
+  border: none;
+  border-radius: 2px;
+  font: inherit;
+  font-size: 18px;
+  line-height: normal;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.15s linear, top 0.05s linear, box-shadow 0.05s linear, background-color 0.15s linear;
+
+  &:active {
+    top: 2px;
+  }
+
+  &--gets-larger { 
+    @include for-big-desktop-up {  
+      padding: 20px 20px 17px;
+      font-size: 24px;
+    }
+  }
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  &--primary {
+    background-color: $brand-red;
+    box-shadow: 0 6px 20px 0 rgba($shadow-red, 0.3);
+    color: white;
+    font-weight: $medium-weight;
+
+    &:hover {
+      background: lighten($brand-red, 5%);
+    }
+
+    &:active {
+      box-shadow: 0 4px 12px 0 rgba($shadow-red, 0.35);
+    }
+
+    &.btn--dark-bg {
+      position: relative;
+      background: white;
+      color: $brand-red;
+      transition: box-shadow 0.2s linear, color 0.15s linear;
+
+      &:hover {
+        color: $blue;
+        box-shadow: 0 20px 40px 0 rgba($shadow-red, 0.25);
+      }
+    }
+  }
+
+  &--primary-blue {
+    background-color: $blue;
+
+    &:hover {
+      background: darken($blue, 5%);
+    }
+  }
+
+  &--secondary {
+    font-weight: $regular-weight;
+    box-shadow: inset 0 0 0 1px $gray;
+    background-color: transparent;
+    color: $text-gray;
+
+    &:hover {
+      box-shadow: inset 0 0 0 1px $blue;
+      color: $blue;
+    }
+
+    &.btn--dark-bg {
+      background-color: $dark-red;
+      box-shadow: none;
+      color: rgba(white, 0.9);
+
+      &:hover {
+        background: darken($dark-red, 5%);
+      }
+    }
+  }
+}
+
+.btn-hint {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  color: $text-gray;
+}
