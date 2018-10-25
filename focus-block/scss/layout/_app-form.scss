@@ -1,0 +1,109 @@
+.app-form {
+
+  .app-wrapper--finished & {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .app-wrapper--popup & {
+    margin-top: auto;
+
+    @include for-tablet-landscape-up {
+      margin-top: 64px;
+    }
+  }
+
+  @include for-tablet-portrait-up {
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 100px;
+  }
+}
+
+.app-form__header {
+  margin-bottom: 35px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: $medium-weight;
+  color: $text-black;
+
+  @include for-tablet-portrait-up {
+    margin-bottom: 64px;
+    font-size: 24px;
+  }
+
+  @include for-big-desktop-up {
+    margin-bottom: 80px;
+    font-size: 32px;
+  }
+}
+
+.app-form__message {
+  margin-bottom: 48px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 24px;
+  color: $text-black;
+
+
+  @include for-tablet-portrait-up {
+    margin-bottom: 64px;
+    font-size: 18px;
+    line-height: 32px;
+  }
+
+  @include for-big-desktop-up {
+    margin-bottom: 80px;
+  }
+}
+
+.app-form__actions {
+  .btn {
+    width: 100%;
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .app-wrapper--finished & {
+    .btn {
+      margin-top: 80px;
+
+      @include for-tablet-portrait-up {
+        margin-top: 0;
+      }
+    }
+  }
+
+  @include for-tablet-portrait-up {
+    display: flex;
+    justify-content: center;
+    
+    .btn {
+      width: 220px;
+      margin-bottom: 0;
+      flex-grow: 1;
+
+      &:first-child {
+        margin-left: 24px;
+        order: 1;
+      }
+
+      &:last-child {
+        margin-right: 24px;
+      }
+
+      &:only-child {
+        margin-left: 0;
+        margin-right: 0;
+        flex-grow: 0;
+      }
+    }
+  }
+
+}

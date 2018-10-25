@@ -1,0 +1,14 @@
+.link {
+  text-decoration: underline;
+  transition: color 0.1s linear;
+
+  &:hover {
+    color: $blue;
+  }
+
+  &--white {
+    &:hover {
+      color: mix(white, $blue, 50%);
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.landing-cta {
+  margin-top: 60px;
+  padding: 0 32px;
+
+  .btn {
+    width: 100%;
+  }
+
+  @include for-tablet-portrait-up {
+    margin-top: 92px;
+    padding: 0;
+    text-align: center;
+
+    .btn {
+      width: 280px;
+    }
+  }
+
+  @include for-big-desktop-up {
+    .btn {
+      width: 320px;
+    }
+  }
+}

@@ -1,0 +1,44 @@
+$brand-red: #C02647;
+$dark-red: #A21437;
+$pink: #F02355;
+$shadow-red: #331A22;
+$gray: #CCC6C7;
+
+$blue: #51B6D8;
+$error-red: #EC4343;
+
+$background-white: #FCFAFA;
+$text-black: #311C22;
+$text-gray: #B3AAAB;
+
+@mixin red-gradient() {
+  background: linear-gradient(120deg, #B9143B 0%, #C51C3B 50%, #B61748 100%)
+}
+
+@mixin multicolor-gradient() {
+  background: linear-gradient(75deg, rgba(208,64,65, 1) 0%, rgba(204,32,72, 1) 80%);
+  
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: linear-gradient(300deg, rgba(184,22,80, 1) 0%, rgba(184,22,80, 0) 25%);
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: linear-gradient(210deg, rgba(193,14,74, 1) 0%, rgba(193,14,74, 0) 40%);
+  }
+}
