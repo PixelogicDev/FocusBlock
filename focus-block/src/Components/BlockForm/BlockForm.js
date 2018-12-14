@@ -130,17 +130,17 @@ class BlockForm extends Component {
 
 		switch (event.target.name) {
 			case 'title':
-				const titleLen = event.target.value.length;
-				titleValid = titleLen > 0 ? 'valid' : 'Title cannot be empty';
+				const title = event.target.value;
+				const EMPTY_FIELD = title.trim() === '';
+				titleValid = !EMPTY_FIELD ? 'valid' : 'Title cannot be empty';
+				break;
+			case 'customTimer':
+				const CUSTOM_TIMER_LENGTH = event.target.value >= 1 && event.target.value <= 1440;
+				timerValid = CUSTOM_TIMER_LENGTH ? 'valid' : 'Please select a time between 1 and 1440';
 				break;
 			case 'timer':
-				if (event.target.value === 'custom') {
-					timerValid = 'valid';
-				} else {
-					const timerLen = event.target.value.length;
-					timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
-				}
-
+				const timerLen = event.target.value.length;
+				timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
 				break;
 			case 'contact':
 				const validContact = event.target.value.match(
