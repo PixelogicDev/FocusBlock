@@ -10,9 +10,14 @@ class BlockForm extends Component {
 		super(props);
 
 		// This component can be rendered on creation and on edit. Set state depending on scenario //
-		let currentState;
+		this.state = this.constructInitialState(props);
+
+	}
+
+	// Construct the initial state depending on whether editing or not. //
+	constructInitialState(props) {
 		if (this.props.isEditing) {
-			currentState = {
+			return {
 				title: props.focusBlock.state.title,
 				timer: props.focusBlock.state.timer,
 				customTimer: props.focusBlock.state.customTimer,
@@ -20,19 +25,16 @@ class BlockForm extends Component {
 				formErrors: { title: 'valid', timer: 'valid', contact: 'valid' },
 				formValid: true
 			};
-		} else {
-			// Creates a new focusBlock //
-			currentState = {
-				title: '',
-				timer: 15,
-				customTimer: 15,
-				contact: '',
-				formErrors: { title: '', timer: 'valid', contact: 'valid' },
-				formValid: false
-			};
 		}
 
-		this.state = currentState;
+		return {
+			title: '',
+			timer: 15,
+			customTimer: 15,
+			contact: '',
+			formErrors: { title: '', timer: 'valid', contact: 'valid' },
+			formValid: false
+		};
 	}
 
 	//-- Helpers --//
@@ -54,24 +56,25 @@ class BlockForm extends Component {
 		});
 	};
 
+	// Return custom timer if set to custom, otherwise return normal timer //
+	getTimerVal = () => {
+		if (this.state.timer === 'custom') {
+			return this.state.customTimer;
+		}
+
+		return this.state.timer;
+	}
+
 	// Convert the number value of the timer to a more valuable unit of time //
 	getFriendlyTime = () => {
-		let friendlyTimer = '';
-		let timerVal;
-
-		if (this.state.timer === 'custom') {
-			timerVal = this.state.customTimer;
-		} else {
-			timerVal = this.state.timer;
-		}
+		const timerVal = this.getTimerVal()
 
 		if (timerVal < 60) {
-			friendlyTimer = `${timerVal}m`;
-		} else {
-			friendlyTimer = `${timerVal / 60}h`;
+			return `${timerVal}m`;
 		}
 
-		return friendlyTimer;
+		return `${timerVal / 60}h`;
+
 	};
 
 	// Use this to create the model of a FocusBlock on sumbit with the newly added form data //
@@ -96,8 +99,8 @@ class BlockForm extends Component {
 	// If editing update current FocusBlock passed in; else init new FocusBlock with form data //
 	blockEvent = event => {
 		if (this.props.isEditing) {
-			let focusBlock = this.props.focusBlock;
-			let updatedState = {
+			const focusBlock = this.props.focusBlock;
+			const updatedState = {
 				title: this.state.title,
 				timer: this.state.timer,
 				customTimer: this.state.customTimer,
@@ -127,20 +130,20 @@ class BlockForm extends Component {
 
 		switch (event.target.name) {
 			case 'title':
-				let titleLen = event.target.value.length;
+				const titleLen = event.target.value.length;
 				titleValid = titleLen > 0 ? 'valid' : 'Title cannot be empty';
 				break;
 			case 'timer':
 				if (event.target.value === 'custom') {
 					timerValid = 'valid';
 				} else {
-					let timerLen = event.target.value.length;
+					const timerLen = event.target.value.length;
 					timerValid = timerLen > 0 ? 'valid' : 'Please select a time';
 				}
 
 				break;
 			case 'contact':
-				let validContact = event.target.value.match(
+				const validContact = event.target.value.match(
 					/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i
 				);
 
@@ -159,18 +162,13 @@ class BlockForm extends Component {
 
 	// Check to see if entire form is valid before submitting //
 	formValid = (title, timer, contact) => {
-		let isFormValid = false;
-		if (title === 'valid' && timer === 'valid' && contact === 'valid') {
-			isFormValid = true;
-		}
-
 		this.setState({
 			formErrors: {
 				title: title,
 				timer: timer,
 				contact: contact
 			},
-			formValid: isFormValid
+			formValid: title === 'valid' && timer === 'valid' && contact === 'valid'
 		});
 	};
 
@@ -192,8 +190,8 @@ class BlockForm extends Component {
 						{this.state.formErrors.title !== 'valid' ? (
 							<div className="error-label">{this.state.formErrors.title}</div>
 						) : (
-							''
-						)}
+								''
+							)}
 						{/* FocusBlock Timer */}
 						<label>How long do you need to focus?</label>
 						<select
@@ -217,13 +215,13 @@ class BlockForm extends Component {
 								onChange={this.handleChange}
 							/>
 						) : (
-							''
-						)}
+								''
+							)}
 						{this.state.formErrors.timer !== 'valid' ? (
 							<div className="error-label">{this.state.formErrors.timer}</div>
 						) : (
-							''
-						)}
+								''
+							)}
 						{/* FocusBlock Email To Contact */}
 						<label>Who should be contacted when time is up?</label>
 						<input
@@ -236,8 +234,8 @@ class BlockForm extends Component {
 						{this.state.formErrors.contact !== 'valid' ? (
 							<div className="error-label">{this.state.formErrors.contact}</div>
 						) : (
-							''
-						)}
+								''
+							)}
 						{this.props.isEditing ? (
 							<div className="action-buttons">
 								<button
@@ -264,10 +262,10 @@ class BlockForm extends Component {
 								</button>
 							</div>
 						) : (
-							<button disabled={!this.state.formValid} type="submit">
-								Create
+								<button disabled={!this.state.formValid} type="submit">
+									Create
 							</button>
-						)}
+							)}
 					</form>
 					{/* Form End */}
 				</div>

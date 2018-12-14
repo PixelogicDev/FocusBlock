@@ -20,12 +20,10 @@ class App extends Component {
 	// Need this to check to see if there is a current id in URL. We need to save the path to navigate
 	//-- MAD PROPS HiDeoo -- //
 	static getDerivedStateFromProps(props, state) {
-		let pathname = props.history.location.pathname.split('/');
-		let joined = '';
+		const pathname = props.history.location.pathname.split('/');
 
 		if (pathname.length === 3 && state.dashboardPath === '') {
-			joined = pathname.join('/');
-			return { dashboardPath: joined };
+			return { dashboardPath: pathname.join('/') }
 		}
 
 		return null;

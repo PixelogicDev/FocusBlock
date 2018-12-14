@@ -8,7 +8,7 @@ class ServiceContainer extends Component {
 	// POST create new user in DB //
 	createUser = () => {
 		return new Promise((resolve, reject) => {
-			let json = fetch(`${process.env.REACT_APP_API_BASE}/new`, {
+			const json = fetch(`${process.env.REACT_APP_API_BASE}/new`, {
 				credentials: 'omit',
 				headers: {
 					'content-type': 'application/json'
@@ -30,7 +30,7 @@ class ServiceContainer extends Component {
 	getUser = id => {
 		return new Promise((resolve, reject) => {
 			//-- MAD PROPS for brutusharvenius -- //
-			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`).then(
+			const json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`).then(
 				response => {
 					return response.json();
 				}
@@ -46,7 +46,7 @@ class ServiceContainer extends Component {
 	// POST update on user by ID //
 	updateUser = (id, focusBlocks) => {
 		return new Promise((resolve, reject) => {
-			let json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`, {
+			const json = fetch(`${process.env.REACT_APP_API_BASE}/${id}`, {
 				body: JSON.stringify({ focusBlocks: focusBlocks }),
 				credentials: 'omit',
 				headers: {
