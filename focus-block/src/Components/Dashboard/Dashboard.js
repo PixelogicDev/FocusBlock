@@ -28,7 +28,7 @@ class Dashboard extends Component {
 
 		// If new user, redirect to their unique url //
 		if (!props.match.params.id) {
-			let serviceContainer = new ServiceContainer();
+			const serviceContainer = new ServiceContainer();
 			// Create user and redirect //
 			serviceContainer
 				.createUser()
@@ -46,7 +46,7 @@ class Dashboard extends Component {
 
 	componentDidMount() {
 		// If userID is part of path, get user from DB //
-		let userId = this.props.match.params.id;
+		const userId = this.props.match.params.id;
 		if (userId) {
 			this.state.service
 				.getUser(userId)
@@ -65,7 +65,7 @@ class Dashboard extends Component {
 	// Event used to create a new FocusBlock & send to DB //
 	createBlock = focusBlock => {
 		// Get current blocks in state //
-		let currentBlocks = this.state.user.focusBlocks;
+		const currentBlocks = this.state.user.focusBlocks;
 		currentBlocks.push(focusBlock);
 
 		this.setState({
@@ -74,7 +74,7 @@ class Dashboard extends Component {
 		});
 
 		// Remove contact to not store in DB //
-		let clonedBlocks = this.blockCloner(currentBlocks);
+		const clonedBlocks = this.blockCloner(currentBlocks);
 
 		// Update DB //
 		this.state.service
@@ -90,11 +90,11 @@ class Dashboard extends Component {
 	// Event used to update a FocusBlock & send to DB //
 	updateBlock = focusBlock => {
 		// Search for FocusBlock by ID //
-		let index = this.findBlockIndex(focusBlock.id);
+		const index = this.findBlockIndex(focusBlock.id);
 
 		if (index !== -1) {
 			// Replace Block with updated one //
-			let blocksCopy = this.state.user.focusBlocks;
+			const blocksCopy = this.state.user.focusBlocks;
 			blocksCopy[index] = focusBlock;
 
 			// Set state //
@@ -103,7 +103,7 @@ class Dashboard extends Component {
 			});
 
 			// Clone block to remove email //
-			let clonedBlocks = this.blockCloner(blocksCopy);
+			const clonedBlocks = this.blockCloner(blocksCopy);
 
 			// Update db //
 			this.state.service
@@ -122,19 +122,19 @@ class Dashboard extends Component {
 	// Event used to delete a FocusBlock & send to DB //
 	deleteBlock = id => {
 		// Find index of block //
-		let index = this.findBlockIndex(id);
+		const index = this.findBlockIndex(id);
 
 		if (index !== -1) {
 			// Pop alert to confirm delete //
-			let willDelete = window.confirm(
+			const willDelete = window.confirm(
 				`This action will delete "${
-					this.state.user.focusBlocks[index].title
+				this.state.user.focusBlocks[index].title
 				}". Press 'Okay' to confirm.`
 			);
 
 			if (willDelete) {
 				// Trigger update //
-				let blocksCopy = this.state.user.focusBlocks;
+				const blocksCopy = this.state.user.focusBlocks;
 				blocksCopy.splice(index, 1);
 
 				// Set state //
@@ -143,7 +143,7 @@ class Dashboard extends Component {
 				});
 
 				// Clone block to remove email //
-				let clonedBlocks = this.blockCloner(blocksCopy);
+				const clonedBlocks = this.blockCloner(blocksCopy);
 
 				// Update db //
 				this.state.service
@@ -163,7 +163,7 @@ class Dashboard extends Component {
 	// Get ID from path and parse //
 	getUserId = path => {
 		// Split path and check for id //
-		let idSplit = path.split('/');
+		const idSplit = path.split('/');
 		return idSplit[1] !== '' ? idSplit[1] : null;
 	};
 
@@ -179,26 +179,23 @@ class Dashboard extends Component {
 	// Logic to get current FocusBlocks and update array //
 	updateUserBlocks = newBlocks => {
 		// Get current user state //
-		let currentUser = { ...this.state.user };
+		const currentUser = { ...this.state.user };
 		currentUser.focusBlocks = newBlocks;
 		return currentUser;
 	};
 
 	// Used to strip emails from each FocusBlock in array //
 	blockCloner = blocks => {
-		let cloneArray = [];
-
-		blocks.forEach(block => {
-			let cloneBlock = {
+		return blocks.map(block => {
+			const cloneBlock = {
 				...block
 			};
 
 			// Remove contact //
 			cloneBlock.contact = '';
-			cloneArray.push(cloneBlock);
-		});
+			return cloneBlock
+		})
 
-		return cloneArray;
 	};
 
 	// Used to show the BlockForm to create a new FocusBlock //
@@ -219,7 +216,7 @@ class Dashboard extends Component {
 		ReactGA.pageview(window.location.pathname);
 
 		// This obj is used to trigger the events on this component from other components //
-		let triggerObj = {
+		const triggerObj = {
 			create: this.createBlock,
 			update: this.updateBlock,
 			delete: this.deleteBlock
@@ -237,13 +234,13 @@ class Dashboard extends Component {
 					{this.showBlockForm() ? (
 						<BlockForm triggers={triggerObj} />
 					) : (
-						<div className="blocks">
-							{this.state.user.focusBlocks.map((block, i) => (
-								<FocusBlock events={triggerObj} block={block} key={i} />
-							))}
-							{this.state.isAdding ? <BlockForm triggers={triggerObj} /> : ''}
-						</div>
-					)}
+							<div className="blocks">
+								{this.state.user.focusBlocks.map((block, i) => (
+									<FocusBlock events={triggerObj} block={block} key={i} />
+								))}
+								{this.state.isAdding ? <BlockForm triggers={triggerObj} /> : ''}
+							</div>
+						)}
 				</div>
 				<AddBlockButton
 					blockCount={this.state.user.focusBlocks.length}
