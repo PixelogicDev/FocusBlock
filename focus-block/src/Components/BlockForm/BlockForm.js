@@ -239,6 +239,7 @@ class BlockForm extends Component {
 						{this.props.isEditing ? (
 							<div className="action-buttons">
 								<button
+                                    type="button"
 									className="action-delete"
 									onClick={() => this.props.focusBlock.delete()}
 								>
@@ -248,6 +249,7 @@ class BlockForm extends Component {
 									/>
 								</button>
 								<button
+                                    type="button"
 									className="action-cancel"
 									onClick={() =>
 										this.props.focusBlock.setState({

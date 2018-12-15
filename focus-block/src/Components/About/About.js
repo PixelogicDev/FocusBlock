@@ -21,9 +21,9 @@ class About extends Component {
 					</div>
 					<div className="subtitle">Be The Most Productive Version Of You</div>
 				</div>
-				<button className="get-focused-btn">
-					<Link to="/dashboard">Get Focused</Link>
-				</button>
+				<Link className="get-focused-btn" to="/dashboard">
+					Get Focused
+				</Link>
 				<div className="info-blocks">
 					<div className="info-block">
 						<div className="info-content">
