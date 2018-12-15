@@ -16,6 +16,8 @@
       padding: 0 20px 0 20px;
       text-decoration: none;
       cursor: pointer; }
+      .nav .nav-options ul a:visited {
+        color: #000; }
       .nav .nav-options ul a:hover {
         color: #5aca0e; }
 

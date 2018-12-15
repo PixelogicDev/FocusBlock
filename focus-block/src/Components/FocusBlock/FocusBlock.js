@@ -42,24 +42,24 @@ class FocusBlock extends Component {
 		);
 	}
 
+	getTimerVal = (timer, customTimer) => {
+		if (timer === 'custom') {
+			return customTimer;
+		}
+
+		return timer;
+	}
+
 	// Convert the number value of the timer to a more valuable unit of time //
 	getFriendlyTime = (timer, customTimer) => {
-		let friendlyTimer = '';
-		let timerVal;
-
-		if (timer === 'custom') {
-			timerVal = customTimer;
-		} else {
-			timerVal = timer;
-		}
+		const timerVal = this.getTimerVal(timer, customTimer);
 
 		if (timerVal < 60) {
-			friendlyTimer = `${timerVal}m`;
-		} else {
-			friendlyTimer = `${timerVal / 60}h`;
+			return `${timerVal}m`;
 		}
 
-		return friendlyTimer;
+		return `${timerVal / 60}h`;
+
 	};
 
 	// Toggle the FocusBlock to start or stop //
@@ -75,15 +75,15 @@ class FocusBlock extends Component {
 
 	// Email composition that is sent to designated person if email is provided //
 	sendEmail = () => {
-		let mailer = new Email();
-		let sender = 'support@pixelogicapps.com';
-		let subject = `Requesting Help: ${this.state.title}`;
-		let body = `
+		const mailer = new Email();
+		const sender = 'support@pixelogicapps.com';
+		const subject = `Requesting Help: ${this.state.title}`;
+		const body = `
 			Hi from Pixelogic Support!
 			Looks like someone is requesting your help with task '${this.state.title}'
 			Brought to you by FocusBlock https://www.focusblock.stream
 		`;
-		let server = 'smtp.sendgrid.net';
+		const server = 'smtp.sendgrid.net';
 
 		mailer.send(
 			sender,
@@ -166,8 +166,8 @@ class FocusBlock extends Component {
 
 	// When adding a new email, validate and then set state //
 	contactBlurEvent = event => {
-		let targetVal = event.target.value;
-		let validContact = targetVal.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+		const targetVal = event.target.value;
+		const validContact = targetVal.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
 
 		if (validContact || event.target.value === '') {
 			this.setState({
@@ -202,8 +202,8 @@ class FocusBlock extends Component {
 
 	render() {
 		// Setup dynamic class using classnames module //
-		let classNames = require('classnames');
-		let classes = classNames('block', {
+		const classNames = require('classnames');
+		const classes = classNames('block', {
 			start: this.state.currentProgress === 'start' && this.state.blockStarted,
 			mid: this.state.currentProgress === 'mid' && this.state.blockStarted,
 			end: this.state.currentProgress === 'end' && this.state.blockStarted
@@ -214,60 +214,60 @@ class FocusBlock extends Component {
 				{this.state.isEditing ? (
 					<BlockForm isEditing="true" focusBlock={this} />
 				) : (
-					<div id={this.state.id} className={classes}>
-						<div className="block-content">
-							<div className="block-title">{this.state.title}</div>
-							<div className="block-time">{this.state.friendlyTimer}</div>
-							<div className="block-contact">
-								{this.state.contactVisible ? (
-									[
-										this.state.contact === '' ? (
-											// MAD PROPS Lumie1337 //
-											<input
-												key="new_contact"
-												onBlur={this.contactBlurEvent}
-												placeholder="Email"
-												className="contact-input"
-											/>
-										) : (
-											<span key="current_contact" onClick={this.toggleContact}>
-												{this.state.contact}
-											</span>
-										)
-									]
-								) : (
-									// If contact is empty, show input field to add contact //
-									<span onClick={this.toggleContact}>
-										Click to show contact.
-									</span>
-								)}
-							</div>
-							{this.state.inputErrors.contact !== 'valid' ? (
-								<div className="error-label">
-									{this.state.inputErrors.contact}
-								</div>
-							) : (
-								''
-							)}
-							<div className="focus-button">
-								<button className="block-start" onClick={this.toggleBlock}>
-									{this.state.blockStarted ? (
-										<span>Stop Focusing</span>
+						<div id={this.state.id} className={classes}>
+							<div className="block-content">
+								<div className="block-title">{this.state.title}</div>
+								<div className="block-time">{this.state.friendlyTimer}</div>
+								<div className="block-contact">
+									{this.state.contactVisible ? (
+										[
+											this.state.contact === '' ? (
+												// MAD PROPS Lumie1337 //
+												<input
+													key="new_contact"
+													onBlur={this.contactBlurEvent}
+													placeholder="Email"
+													className="contact-input"
+												/>
+											) : (
+													<span key="current_contact" onClick={this.toggleContact}>
+														{this.state.contact}
+													</span>
+												)
+										]
 									) : (
-										<span>Get Focused</span>
+											// If contact is empty, show input field to add contact //
+											<span onClick={this.toggleContact}>
+												Click to show contact.
+									</span>
+										)}
+								</div>
+								{this.state.inputErrors.contact !== 'valid' ? (
+									<div className="error-label">
+										{this.state.inputErrors.contact}
+									</div>
+								) : (
+										''
 									)}
-								</button>
+								<div className="focus-button">
+									<button className="block-start" onClick={this.toggleBlock}>
+										{this.state.blockStarted ? (
+											<span>Stop Focusing</span>
+										) : (
+												<span>Get Focused</span>
+											)}
+									</button>
+								</div>
+								<img
+									className="edit"
+									onClick={this.toggleEdit}
+									//-- MAD PROPS Tendencydriven --//
+									src={require('../../Assets/edit-pencil@2x.png')}
+									alt="Edit focus block pencil button"
+								/>
 							</div>
-							<img
-								className="edit"
-								onClick={this.toggleEdit}
-								//-- MAD PROPS Tendencydriven --//
-								src={require('../../Assets/edit-pencil@2x.png')}
-								alt="Edit focus block pencil button"
-							/>
 						</div>
-					</div>
-				)}
+					)}
 			</Fragment>
 		);
 	}
